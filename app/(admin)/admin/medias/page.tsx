@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminMedias() {
   const medias = await prisma.media.findMany({ orderBy: { createdAt: "desc" }, take: 20 });
 

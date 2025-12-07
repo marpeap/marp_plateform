@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 
+export const dynamic = "force-dynamic";
+
 export default async function ClientDocuments() {
   const docs = await prisma.clientProject.findMany({
     select: { id: true, title: true, documents: true },

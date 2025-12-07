@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminUsers() {
   const users = await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
 

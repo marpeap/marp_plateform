@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProjects() {
   const projects = await prisma.project.findMany({
     orderBy: { createdAt: "desc" },

@@ -1,12 +1,13 @@
 import { cn } from "@/lib/utils";
 
-type BadgeVariant = "default" | "outline" | "success" | "warning";
+type BadgeVariant = "default" | "outline" | "success" | "warning" | "soft";
 
 const styles: Record<BadgeVariant, string> = {
   default: "bg-secondary text-secondary-foreground border-transparent",
   outline: "border border-border text-foreground",
   success: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300",
   warning: "bg-amber-500/15 text-amber-700 dark:text-amber-200",
+  soft: "bg-accent/10 text-accent-foreground border border-accent/20",
 };
 
 export function Badge({

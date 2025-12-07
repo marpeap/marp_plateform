@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 export default async function ClientProjects() {
   const clientProjects = await prisma.clientProject.findMany({
     include: { project: true },

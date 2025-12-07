@@ -5,11 +5,10 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import {
   ArticleStatus,
+  MediaCategory,
   ProjectCategory,
   ProjectStatus,
 } from "@prisma/client";
-
-type ActionState = { ok: boolean; message: string };
 
 const projectSchema = z.object({
   title: z.string().min(3),
@@ -26,7 +25,7 @@ const projectSchema = z.object({
   featured: z.coerce.boolean().default(false),
 });
 
-export async function upsertProject(formData: FormData): Promise<ActionState> {
+export async function upsertProject(formData: FormData): Promise<void> {
   const parsed = projectSchema.safeParse({
     title: formData.get("title"),
     slug: formData.get("slug"),
@@ -43,7 +42,7 @@ export async function upsertProject(formData: FormData): Promise<ActionState> {
   });
 
   if (!parsed.success) {
-    return { ok: false, message: "Validation projet échouée." };
+    throw new Error("Validation projet échouée.");
   }
 
   const { stack, ...data } = parsed.data;
@@ -61,7 +60,6 @@ export async function upsertProject(formData: FormData): Promise<ActionState> {
 
   revalidatePath("/admin/projets");
   revalidatePath("/projets");
-  return { ok: true, message: "Projet sauvegardé." };
 }
 
 const articleSchema = z.object({
@@ -73,7 +71,7 @@ const articleSchema = z.object({
   status: z.nativeEnum(ArticleStatus).default(ArticleStatus.DRAFT),
 });
 
-export async function upsertArticle(formData: FormData): Promise<ActionState> {
+export async function upsertArticle(formData: FormData): Promise<void> {
   const parsed = articleSchema.safeParse({
     title: formData.get("title"),
     slug: formData.get("slug"),
@@ -84,7 +82,7 @@ export async function upsertArticle(formData: FormData): Promise<ActionState> {
   });
 
   if (!parsed.success) {
-    return { ok: false, message: "Validation article échouée." };
+    throw new Error("Validation article échouée.");
   }
 
   const { tags, ...data } = parsed.data;
@@ -102,7 +100,6 @@ export async function upsertArticle(formData: FormData): Promise<ActionState> {
 
   revalidatePath("/admin/articles");
   revalidatePath("/formations");
-  return { ok: true, message: "Article sauvegardé." };
 }
 
 const pageSchema = z.object({
@@ -113,7 +110,7 @@ const pageSchema = z.object({
   metaDesc: z.string().optional(),
 });
 
-export async function upsertPage(formData: FormData): Promise<ActionState> {
+export async function upsertPage(formData: FormData): Promise<void> {
   const parsed = pageSchema.safeParse({
     slug: formData.get("slug"),
     title: formData.get("title"),
@@ -123,7 +120,7 @@ export async function upsertPage(formData: FormData): Promise<ActionState> {
   });
 
   if (!parsed.success) {
-    return { ok: false, message: "Validation page échouée." };
+    throw new Error("Validation page échouée.");
   }
 
   await prisma.page.upsert({
@@ -133,18 +130,17 @@ export async function upsertPage(formData: FormData): Promise<ActionState> {
   });
 
   revalidatePath("/admin/pages");
-  return { ok: true, message: "Page sauvegardée." };
 }
 
 const mediaSchema = z.object({
   url: z.string().url(),
   alt: z.string().optional(),
-  category: z.string().optional(),
+  category: z.nativeEnum(MediaCategory).optional(),
   mimeType: z.string().optional(),
   size: z.coerce.number().optional(),
 });
 
-export async function registerMedia(formData: FormData): Promise<ActionState> {
+export async function registerMedia(formData: FormData): Promise<void> {
   const parsed = mediaSchema.safeParse({
     url: formData.get("url"),
     alt: formData.get("alt"),
@@ -154,7 +150,7 @@ export async function registerMedia(formData: FormData): Promise<ActionState> {
   });
 
   if (!parsed.success) {
-    return { ok: false, message: "Validation média échouée." };
+    throw new Error("Validation média échouée.");
   }
 
   await prisma.media.create({
@@ -162,6 +158,5 @@ export async function registerMedia(formData: FormData): Promise<ActionState> {
   });
 
   revalidatePath("/admin/medias");
-  return { ok: true, message: "Média enregistré." };
 }
 

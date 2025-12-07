@@ -3,6 +3,8 @@ import { timeline, tutorials as fallbackTutorials, skillTree } from "@/lib/conte
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 export default async function FormationsPage() {
   const articles = await prisma.article.findMany({
     where: { status: "PUBLISHED" },

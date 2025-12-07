@@ -32,9 +32,9 @@ export async function submitContact(
 
   if (!parsed.success) {
     const errors: Record<string, string> = {};
-    parsed.error.errors.forEach((err) => {
-      const path = err.path.join(".") || "form";
-      errors[path] = err.message;
+    parsed.error.issues.forEach((issue) => {
+      const path = issue.path.join(".") || "form";
+      errors[path] = issue.message;
     });
     return { ok: false, errors, message: "Merci de corriger les champs." };
   }
