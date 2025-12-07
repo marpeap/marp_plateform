@@ -5,10 +5,17 @@ import { ProjectsGrid } from "@/components/public/projects-grid";
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
-  const dbProjects = await prisma.project.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: { createdAt: "desc" },
-  });
+  let dbProjects: Awaited<ReturnType<typeof prisma.project.findMany>> = [];
+
+  try {
+    dbProjects = await prisma.project.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch {
+    // Fallback statique si la BDD n'est pas disponible
+    dbProjects = [];
+  }
 
   const merged: ProjectCard[] =
     dbProjects.length > 0

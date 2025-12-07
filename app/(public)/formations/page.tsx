@@ -6,10 +6,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export const dynamic = "force-dynamic";
 
 export default async function FormationsPage() {
-  const articles = await prisma.article.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: { createdAt: "desc" },
-  });
+  let articles: Awaited<ReturnType<typeof prisma.article.findMany>> = [];
+
+  try {
+    articles = await prisma.article.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch {
+    articles = [];
+  }
 
   const tutorials =
     articles.length > 0

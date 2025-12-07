@@ -29,11 +29,11 @@ export default function LandingPage() {
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/contact">Me contacter</Link>
+              <Link href="/formations">Formations</Link>
             </Button>
             <Button asChild variant="ghost">
-              <Link href="https://github.com" className="inline-flex items-center gap-2">
-                <Github className="h-4 w-4" /> GitHub
+              <Link href="/client" className="inline-flex items-center gap-2">
+                Espace clients <Github className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -157,7 +157,7 @@ export default function LandingPage() {
         <Card>
           <CardHeader>
             <CardTitle>Labs & R&D</CardTitle>
-            <CardDescription>Prototypes en continu.</CardDescription>
+              <CardDescription>Prototypes en continu.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {[

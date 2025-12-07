@@ -2,6 +2,12 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
+const navItems = [
+  { href: "/formations", label: "Formations" },
+  { href: "/projets", label: "Projets" },
+  { href: "/client", label: "Espace clients" },
+];
+
 export default function PublicLayout({
   children,
 }: {
@@ -15,23 +21,16 @@ export default function PublicLayout({
             Marpeap Digitals
           </Link>
           <nav className="hidden items-center gap-4 text-sm font-medium md:flex">
-            <Link href="/projets" className="hover:text-primary">
-              Projets
-            </Link>
-            <Link href="/formations" className="hover:text-primary">
-              Formations
-            </Link>
-            <Link href="/labs" className="hover:text-primary">
-              Labs
-            </Link>
-            <Link href="/contact" className="hover:text-primary">
-              Contact
-            </Link>
+            {navItems.map((item) => (
+              <Link key={item.href} href={item.href} className="hover:text-primary">
+                {item.label}
+              </Link>
+            ))}
           </nav>
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Button asChild variant="soft" className="hidden md:inline-flex">
-              <Link href="/contact">Me contacter</Link>
+              <Link href="/client">Espace clients</Link>
             </Button>
           </div>
         </div>
@@ -44,9 +43,9 @@ export default function PublicLayout({
             outils modernes, rapides et fiables.
           </p>
           <div className="flex gap-3 text-sm text-muted-foreground">
-            <Link href="/contact">Contact</Link>
+            <Link href="/formations">Formations</Link>
             <Link href="/projets">Projets</Link>
-            <Link href="/labs">Labs</Link>
+            <Link href="/client">Espace clients</Link>
           </div>
         </div>
       </footer>
