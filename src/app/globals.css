@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 26 27 29;
+    --primary: 237 116 32;
+    --primary-foreground: 255 255 255;
+    --accent: 34 197 94;
+    --accent-foreground: 255 255 255;
+    --muted: 242 243 245;
+    --muted-foreground: 96 99 106;
+    --border: 229 231 235;
+    --ring: 237 116 32;
+  }
+
+  .dark {
+    --background: 15 16 18;
+    --foreground: 242 243 245;
+    --primary: 241 146 68;
+    --primary-foreground: 15 16 18;
+    --accent: 74 222 128;
+    --accent-foreground: 15 16 18;
+    --muted: 53 55 58;
+    --muted-foreground: 160 162 168;
+    --border: 63 65 69;
+    --ring: 241 146 68;
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  body {
+    @apply bg-white text-dark-900 antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-dark-100 text-dark-900 hover:bg-dark-200 focus:ring-dark-300;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-dark-200 bg-transparent text-dark-700 hover:border-primary-500 hover:text-primary-600 focus:ring-primary-500;
+  }
+
+  .btn-accent {
+    @apply btn bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-dark-600 hover:bg-dark-100 hover:text-dark-900 focus:ring-dark-300;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-dark-200 bg-white px-4 py-2.5 text-dark-900 placeholder:text-dark-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-colors duration-200;
+  }
+
+  .card {
+    @apply rounded-2xl border border-dark-100 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-700;
+  }
+
+  .badge-accent {
+    @apply badge bg-accent-100 text-accent-700;
+  }
+
+  .badge-gray {
+    @apply badge bg-dark-100 text-dark-600;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold tracking-tight text-dark-900 md:text-4xl;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-dark-500;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent;
+  }
+
+  .animate-stagger > * {
+    @apply animate-slide-up;
+  }
+
+  .animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .animate-stagger > *:nth-child(2) { animation-delay: 50ms; }
+  .animate-stagger > *:nth-child(3) { animation-delay: 100ms; }
+  .animate-stagger > *:nth-child(4) { animation-delay: 150ms; }
+  .animate-stagger > *:nth-child(5) { animation-delay: 200ms; }
+  .animate-stagger > *:nth-child(6) { animation-delay: 250ms; }
+}
+
