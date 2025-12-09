@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { SimpleHeader } from "@/components/SimpleHeader";
+import { BuySection } from "@/components/BuySection";
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -17,18 +19,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b py-4">
-        <div className="max-w-5xl mx-auto px-4 flex items-center justify-between">
-          <Link href="/" className="font-bold text-xl">Marpeap</Link>
-          <nav className="flex items-center gap-4">
-            <Link href="/products" className="text-sm">← Catalogue</Link>
-            <Link href="/login" className="text-sm">Connexion</Link>
-          </nav>
-        </div>
-      </header>
+      <SimpleHeader />
 
       <main className="max-w-3xl mx-auto px-4 py-8">
+        <Link href="/products" className="text-sm text-gray-500 hover:text-orange-500 mb-4 inline-block">
+          ← Retour au catalogue
+        </Link>
+
         {product.image_url && (
           <img
             src={product.image_url}
@@ -53,12 +50,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         )}
 
-        <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600 mb-3">Pour acheter, connectez-vous à votre compte.</p>
-          <Link href="/login" className="bg-orange-500 text-white px-6 py-2 rounded inline-block">
-            Se connecter pour acheter
-          </Link>
-        </div>
+        <BuySection productId={product.id} productName={product.name} price={product.price} />
       </main>
     </div>
   );

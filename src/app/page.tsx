@@ -1,21 +1,10 @@
 import Link from "next/link";
+import { SimpleHeader } from "@/components/SimpleHeader";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b py-4">
-        <div className="max-w-5xl mx-auto px-4 flex items-center justify-between">
-          <Link href="/" className="font-bold text-xl">Marpeap</Link>
-          <nav className="flex items-center gap-4">
-            <Link href="/products" className="text-sm">Catalogue</Link>
-            <Link href="/login" className="text-sm">Connexion</Link>
-            <Link href="/register" className="text-sm bg-orange-500 text-white px-3 py-1.5 rounded">
-              S&apos;inscrire
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SimpleHeader />
 
       {/* Hero */}
       <main className="max-w-5xl mx-auto px-4 py-16 text-center">

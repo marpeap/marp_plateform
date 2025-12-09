@@ -21,11 +21,15 @@ export default function DashboardPage() {
 
       setUser(user);
 
-      const { data: profile } = await supabase
+      const { data: profile, error } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .single();
+
+      console.log("Profile data:", profile);
+      console.log("Profile error:", error);
+      console.log("Role:", profile?.role);
 
       setProfile(profile);
       setLoading(false);
@@ -44,6 +48,8 @@ export default function DashboardPage() {
     return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
   }
 
+  const isAdmin = profile?.role === "admin";
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -52,9 +58,7 @@ export default function DashboardPage() {
           <Link href="/" className="font-bold text-xl">Marpeap</Link>
           <nav className="flex items-center gap-4">
             <Link href="/products" className="text-sm">Catalogue</Link>
-            {profile?.role === "admin" && (
-              <Link href="/admin" className="text-sm text-orange-500">Admin</Link>
-            )}
+            <Link href="/admin" className="text-sm text-orange-500 font-medium">Admin</Link>
             <button onClick={handleSignOut} className="text-sm text-red-500">
               Déconnexion
             </button>
@@ -66,6 +70,13 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold mb-6">
           Bonjour{profile?.full_name ? `, ${profile.full_name}` : ""} !
         </h1>
+
+        {/* Debug info */}
+        <div className="mb-6 p-3 bg-gray-100 rounded text-xs">
+          <p>Email: {user?.email}</p>
+          <p>Role: {profile?.role || "non défini"}</p>
+          <p>Admin: {isAdmin ? "Oui" : "Non"}</p>
+        </div>
 
         <div className="grid gap-4">
           <Link href="/products" className="border rounded-lg p-4 hover:bg-gray-50">
@@ -81,6 +92,11 @@ export default function DashboardPage() {
           <Link href="/orders" className="border rounded-lg p-4 hover:bg-gray-50">
             <h2 className="font-medium">Mes commandes</h2>
             <p className="text-sm text-gray-500">Historique des achats</p>
+          </Link>
+
+          <Link href="/admin" className="border rounded-lg p-4 hover:bg-orange-50 border-orange-300">
+            <h2 className="font-medium text-orange-600">Administration</h2>
+            <p className="text-sm text-gray-500">Gérer les produits</p>
           </Link>
         </div>
 
