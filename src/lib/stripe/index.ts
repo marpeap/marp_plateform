@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-09-30.acacia",
+  apiVersion: "2024-06-20",
   typescript: true,
 });
 
@@ -34,7 +34,7 @@ export async function createCheckoutSession({
             name: productName,
             description: productDescription,
           },
-          unit_amount: Math.round(price * 100), // Stripe uses cents
+          unit_amount: Math.round(price * 100),
         },
         quantity: 1,
       },
@@ -66,4 +66,3 @@ export function constructWebhookEvent(
 ) {
   return stripe.webhooks.constructEvent(payload, signature, webhookSecret);
 }
-
