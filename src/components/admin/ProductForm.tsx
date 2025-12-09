@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Save } from "lucide-react";
 import { slugify } from "@/lib/utils";
@@ -16,6 +16,15 @@ export function ProductForm({ product, categories }: ProductFormProps) {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState(product?.name || "");
+  const [slug, setSlug] = useState(product?.slug || "");
+  const [autoSlug, setAutoSlug] = useState(!product);
+
+  // Auto-generate slug from name
+  useEffect(() => {
+    if (autoSlug && name) {
+      setSlug(slugify(name));
+    }
+  }, [name, autoSlug]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,14 +49,14 @@ export function ProductForm({ product, categories }: ProductFormProps) {
     };
 
     try {
-      const response = await fetch(
-        product ? `/api/admin/products/${product.id}` : "/api/admin/products",
-        {
-          method: product ? "PUT" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
+      const url = product ? `/api/admin/products/${product.id}` : "/api/admin/products";
+      const method = product ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
       const result = await response.json();
 
@@ -92,7 +101,11 @@ export function ProductForm({ product, categories }: ProductFormProps) {
             name="slug"
             type="text"
             required
-            defaultValue={product?.slug || slugify(name)}
+            value={slug}
+            onChange={(e) => {
+              setSlug(e.target.value);
+              setAutoSlug(false);
+            }}
             className="input"
             placeholder="formation-marketing-digital"
           />
@@ -267,24 +280,32 @@ export function ProductForm({ product, categories }: ProductFormProps) {
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="btn-primary w-full justify-center py-3"
-      >
-        {isPending ? (
-          <>
-            <Loader2 className="h-5 w-5 animate-spin" />
-            Enregistrement...
-          </>
-        ) : (
-          <>
-            <Save className="h-5 w-5" />
-            {product ? "Mettre à jour" : "Créer le produit"}
-          </>
-        )}
-      </button>
+      <div className="flex gap-4">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="btn-secondary flex-1 justify-center py-3"
+        >
+          Annuler
+        </button>
+        <button
+          type="submit"
+          disabled={isPending}
+          className="btn-primary flex-1 justify-center py-3"
+        >
+          {isPending ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Enregistrement...
+            </>
+          ) : (
+            <>
+              <Save className="h-5 w-5" />
+              {product ? "Mettre à jour" : "Créer le produit"}
+            </>
+          )}
+        </button>
+      </div>
     </form>
   );
 }
-

@@ -6,7 +6,6 @@ import { ProfileForm } from "@/components/forms/ProfileForm";
 
 export const metadata = {
   title: "Mon Profil | Marpeap Digitals",
-  description: "Gérez vos informations personnelles",
 };
 
 export default async function ProfilePage() {
@@ -17,32 +16,23 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="py-12">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <Link href="/dashboard" className="inline-flex items-center gap-2 text-dark-500 hover:text-primary-600 transition-colors mb-4">
-            <ArrowLeft className="h-4 w-4" />
-            Retour au tableau de bord
-          </Link>
-          <h1 className="section-title">Mon profil</h1>
-          <p className="section-subtitle mt-2">
-            Gérez vos informations personnelles
-          </p>
-        </div>
+    <div className="py-8">
+      <div className="mx-auto max-w-lg px-4">
+        <Link href="/dashboard" className="inline-flex items-center gap-2 text-dark-500 hover:text-primary-600 mb-6">
+          <ArrowLeft className="h-4 w-4" />
+          Tableau de bord
+        </Link>
+        
+        <h1 className="text-2xl font-bold text-dark-900 mb-6">Mon profil</h1>
 
-        <div className="card">
+        <div className="card mb-6">
           <ProfileForm profile={profile} action={updateProfile} />
         </div>
 
-        {/* Danger Zone */}
-        <div className="mt-8 card border-red-200">
-          <h3 className="text-lg font-semibold text-dark-900 mb-4">Zone de danger</h3>
-          <p className="text-dark-500 mb-4">
-            Se déconnecter de votre compte
-          </p>
+        <div className="card border-red-200">
+          <h3 className="font-semibold text-dark-900 mb-3">Déconnexion</h3>
           <form action={signOut}>
-            <button type="submit" className="btn bg-red-100 text-red-700 hover:bg-red-200">
+            <button type="submit" className="btn bg-red-100 text-red-700 hover:bg-red-200 text-sm">
               Se déconnecter
             </button>
           </form>
@@ -51,4 +41,3 @@ export default async function ProfilePage() {
     </div>
   );
 }
-

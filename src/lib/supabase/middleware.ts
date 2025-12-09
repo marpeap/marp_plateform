@@ -29,68 +29,65 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
+  // IMPORTANT: Ne pas exécuter de code entre createServerClient et getUser()
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protected routes
+  const pathname = request.nextUrl.pathname;
+
+  // Routes protégées (nécessitent une connexion)
   const protectedPaths = ["/dashboard", "/profile", "/orders", "/downloads", "/interests"];
+  
+  // Routes admin
   const adminPaths = ["/admin"];
+  
+  // Routes d'authentification (login, register, etc.)
   const authPaths = ["/login", "/register", "/reset-password"];
 
-  const isProtectedPath = protectedPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
-  const isAdminPath = adminPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
-  const isAuthPath = authPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
+  const isProtectedPath = protectedPaths.some((path) => pathname.startsWith(path));
+  const isAdminPath = adminPaths.some((path) => pathname.startsWith(path));
+  const isAuthPath = authPaths.some((path) => pathname.startsWith(path));
 
-  // Redirect unauthenticated users from protected routes
-  if (isProtectedPath && !user) {
+  // Si l'utilisateur n'est pas connecté et essaie d'accéder à une route protégée
+  if (!user && isProtectedPath) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("redirect", request.nextUrl.pathname);
+    url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
   }
 
-  // Redirect authenticated users from auth pages
-  if (isAuthPath && user) {
+  // Si l'utilisateur est connecté et essaie d'accéder aux pages d'auth
+  if (user && isAuthPath) {
     const url = request.nextUrl.clone();
-    const redirect = url.searchParams.get("redirect") || "/dashboard";
-    url.pathname = redirect;
+    const redirect = url.searchParams.get("redirect");
+    url.pathname = redirect || "/dashboard";
     url.searchParams.delete("redirect");
     return NextResponse.redirect(url);
   }
 
-  // Check admin access
+  // Vérification admin
   if (isAdminPath) {
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = "/login";
+      url.searchParams.set("redirect", pathname);
       return NextResponse.redirect(url);
     }
 
-    // Check if user is admin
+    // Vérifier si l'utilisateur est admin
     const { data: profile } = await supabase
       .from("profiles")
       .select("role")
       .eq("id", user.id)
       .single();
 
-    if (profile?.role !== "admin") {
+    if (!profile || profile.role !== "admin") {
       const url = request.nextUrl.clone();
-      url.pathname = "/dashboard";
+      url.pathname = "/";
       return NextResponse.redirect(url);
     }
   }
 
   return supabaseResponse;
 }
-

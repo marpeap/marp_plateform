@@ -1,21 +1,94 @@
+"use client";
+
 import Link from "next/link";
-import { Plus, ArrowLeft, Edit, Trash2, Eye, EyeOff } from "lucide-react";
-import { getAllProducts } from "@/lib/supabase/admin";
+import { useState, useEffect } from "react";
+import { Plus, ArrowLeft, Edit, Trash2, Eye, EyeOff, Loader2 } from "lucide-react";
 import { formatPrice, getProductTypeLabel, cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
+import type { Product } from "@/types";
 
-export const metadata = {
-  title: "Gestion des produits | Admin",
-  description: "Gérez vos produits",
-};
+export default function AdminProductsPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
-export default async function AdminProductsPage() {
-  const products = await getAllProducts();
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*, category:categories(*)")
+      .order("created_at", { ascending: false });
+
+    if (!error && data) {
+      setProducts(data as Product[]);
+    }
+    setIsLoading(false);
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer "${name}" ?`)) {
+      return;
+    }
+
+    setDeletingId(id);
+
+    try {
+      const response = await fetch(`/api/admin/products/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setProducts(products.filter(p => p.id !== id));
+      } else {
+        const data = await response.json();
+        alert(data.error || "Erreur lors de la suppression");
+      }
+    } catch (error) {
+      alert("Erreur lors de la suppression");
+    }
+
+    setDeletingId(null);
+  };
+
+  const toggleActive = async (id: string, currentState: boolean) => {
+    try {
+      const response = await fetch(`/api/admin/products/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_active: !currentState }),
+      });
+
+      if (response.ok) {
+        setProducts(products.map(p => 
+          p.id === id ? { ...p, is_active: !currentState } : p
+        ));
+      }
+    } catch (error) {
+      alert("Erreur lors de la mise à jour");
+    }
+  };
 
   const typeColors = {
     digital: "bg-purple-100 text-purple-700",
     physical: "bg-amber-100 text-amber-700",
     formation: "bg-blue-100 text-blue-700",
   };
+
+  if (isLoading) {
+    return (
+      <div className="py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="py-12">
@@ -27,8 +100,8 @@ export default async function AdminProductsPage() {
               <ArrowLeft className="h-4 w-4" />
               Retour au dashboard
             </Link>
-            <h1 className="section-title">Gestion des produits</h1>
-            <p className="section-subtitle mt-2">
+            <h1 className="text-3xl font-bold tracking-tight text-dark-900 md:text-4xl">Gestion des produits</h1>
+            <p className="text-lg text-dark-500 mt-2">
               {products.length} produit{products.length > 1 ? "s" : ""} dans le catalogue
             </p>
           </div>
@@ -108,30 +181,46 @@ export default async function AdminProductsPage() {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      {product.is_active ? (
-                        <span className="inline-flex items-center gap-1 text-green-600">
-                          <Eye className="h-4 w-4" />
-                          Actif
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-dark-400">
-                          <EyeOff className="h-4 w-4" />
-                          Inactif
-                        </span>
-                      )}
+                      <button
+                        onClick={() => toggleActive(product.id, product.is_active)}
+                        className={cn(
+                          "inline-flex items-center gap-1 cursor-pointer hover:opacity-80",
+                          product.is_active ? "text-green-600" : "text-dark-400"
+                        )}
+                      >
+                        {product.is_active ? (
+                          <>
+                            <Eye className="h-4 w-4" />
+                            Actif
+                          </>
+                        ) : (
+                          <>
+                            <EyeOff className="h-4 w-4" />
+                            Inactif
+                          </>
+                        )}
+                      </button>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/admin/products/${product.id}`}
                           className="p-2 rounded-lg text-dark-400 hover:text-primary-600 hover:bg-dark-100 transition-colors"
+                          title="Modifier"
                         >
                           <Edit className="h-4 w-4" />
                         </Link>
                         <button
-                          className="p-2 rounded-lg text-dark-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          onClick={() => handleDelete(product.id, product.name)}
+                          disabled={deletingId === product.id}
+                          className="p-2 rounded-lg text-dark-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+                          title="Supprimer"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          {deletingId === product.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="h-4 w-4" />
+                          )}
                         </button>
                       </div>
                     </td>
@@ -155,4 +244,3 @@ export default async function AdminProductsPage() {
     </div>
   );
 }
-
