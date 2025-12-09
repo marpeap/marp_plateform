@@ -78,8 +78,8 @@ export async function getUserDownloads(): Promise<(Interaction & { product: Prod
 
   // Flatten and filter digital products
   const digitalProducts: Product[] = [];
-  data?.forEach((order) => {
-    order.items?.forEach((item: { product: Product }) => {
+  data?.forEach((order: any) => {
+    order.items?.forEach((item: any) => {
       if (item.product && (item.product.product_type === "digital" || item.product.product_type === "formation")) {
         digitalProducts.push(item.product);
       }
@@ -128,4 +128,3 @@ export async function getDashboardStats() {
     totalSpent,
   };
 }
-
