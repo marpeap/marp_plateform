@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -73,11 +74,14 @@ export function ProductCard({ product }: { product: Product }) {
     <div className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
       <Link href={`/products/${product.slug}`}>
         {product.image_url && (
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="w-full h-40 object-cover"
-          />
+          <div className="relative w-full h-40">
+            <Image
+              src={product.image_url}
+              alt={product.name}
+              fill
+              className="object-cover"
+            />
+          </div>
         )}
         <div className="p-4">
           <span className="text-xs text-gray-500 uppercase">

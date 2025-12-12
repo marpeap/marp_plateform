@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingCart, Download, Eye } from "lucide-react";
+import { Heart, ShoppingCart, Download, ExternalLink } from "lucide-react";
 import { cn, formatPrice, getProductTypeLabel } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -32,7 +32,7 @@ export function ProductCard({ product, onInterest, isInterested = false }: Produ
           />
         ) : (
           <div className="w-full h-full bg-dark-100 flex items-center justify-center">
-            <Eye className="h-12 w-12 text-dark-300" />
+            <span className="text-dark-400 text-sm">Pas d&apos;image</span>
           </div>
         )}
         
@@ -49,7 +49,7 @@ export function ProductCard({ product, onInterest, isInterested = false }: Produ
             href={`/products/${product.slug}`}
             className="h-10 w-10 rounded-full bg-white flex items-center justify-center text-dark-700 hover:bg-primary-500 hover:text-white transition-colors"
           >
-            <Eye className="h-5 w-5" />
+            <ExternalLink className="h-5 w-5" />
           </Link>
           {onInterest && (
             <button

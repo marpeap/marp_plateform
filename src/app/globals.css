@@ -6,27 +6,29 @@
   :root {
     --background: 255 255 255;
     --foreground: 26 27 29;
-    --primary: 237 116 32;
+    --primary: 59 130 246;
     --primary-foreground: 255 255 255;
-    --accent: 34 197 94;
+    --accent: 100 116 139;
     --accent-foreground: 255 255 255;
-    --muted: 242 243 245;
+    --gold: 245 158 11;
+    --muted: 241 245 249;
     --muted-foreground: 96 99 106;
     --border: 229 231 235;
-    --ring: 237 116 32;
+    --ring: 59 130 246;
   }
 
   .dark {
     --background: 15 16 18;
     --foreground: 242 243 245;
-    --primary: 241 146 68;
+    --primary: 96 165 250;
     --primary-foreground: 15 16 18;
-    --accent: 74 222 128;
+    --accent: 148 163 184;
     --accent-foreground: 15 16 18;
-    --muted: 53 55 58;
+    --gold: 251 191 36;
+    --muted: 51 65 85;
     --muted-foreground: 160 162 168;
     --border: 63 65 69;
-    --ring: 241 146 68;
+    --ring: 96 165 250;
   }
 
   * {
@@ -34,8 +36,9 @@
   }
 
   body {
-    @apply bg-white text-dark-900 antialiased;
+    @apply bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 text-dark-900 antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    min-height: 100vh;
   }
 }
 
@@ -45,61 +48,97 @@
   }
 
   .btn-primary {
-    @apply btn bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+    @apply btn bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-700 hover:to-blue-600 focus:ring-blue-500 shadow-md hover:shadow-lg border border-gold-400/30;
   }
 
   .btn-secondary {
-    @apply btn bg-dark-100 text-dark-900 hover:bg-dark-200 focus:ring-dark-300;
+    @apply btn bg-gradient-to-r from-slate-200 to-slate-100 text-dark-900 hover:from-slate-300 hover:to-slate-200 focus:ring-slate-300 border border-gold-300/20;
   }
 
   .btn-outline {
-    @apply btn border-2 border-dark-200 bg-transparent text-dark-700 hover:border-primary-500 hover:text-primary-600 focus:ring-primary-500;
+    @apply btn border-2 border-gold-400 bg-transparent text-dark-700 hover:border-gold-500 hover:bg-gradient-to-r hover:from-gold-50 hover:to-blue-50 hover:text-blue-700 focus:ring-gold-400 shadow-sm;
   }
 
   .btn-accent {
-    @apply btn bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500;
+    @apply btn bg-gradient-to-r from-slate-500 to-slate-400 text-white hover:from-slate-600 hover:to-slate-500 focus:ring-slate-500 border border-gold-300/30;
   }
 
   .btn-ghost {
-    @apply btn bg-transparent text-dark-600 hover:bg-dark-100 hover:text-dark-900 focus:ring-dark-300;
+    @apply btn bg-transparent text-dark-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-slate-50 hover:text-blue-700 focus:ring-blue-300;
   }
 
   .input {
-    @apply w-full rounded-lg border border-dark-200 bg-white px-4 py-2.5 text-dark-900 placeholder:text-dark-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-colors duration-200;
+    @apply w-full rounded-lg border-2 border-gold-200 bg-white/90 backdrop-blur-sm px-4 py-2.5 text-dark-900 placeholder:text-dark-400 focus:border-gold-400 focus:outline-none focus:ring-2 focus:ring-gold-400/20 transition-all duration-200 shadow-sm;
   }
 
   .card {
-    @apply rounded-2xl border border-dark-100 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md;
+    @apply rounded-2xl border-2 border-gold-200/50 bg-gradient-to-br from-white via-blue-50/30 to-slate-50/30 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:border-gold-300/70 backdrop-blur-sm;
   }
 
   .badge {
-    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium border border-gold-200/30;
   }
 
   .badge-primary {
-    @apply badge bg-primary-100 text-primary-700;
+    @apply badge bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 border-gold-300/40;
   }
 
   .badge-accent {
-    @apply badge bg-accent-100 text-accent-700;
+    @apply badge bg-gradient-to-r from-slate-200 to-slate-100 text-slate-700 border-gold-300/40;
   }
 
   .badge-gray {
-    @apply badge bg-dark-100 text-dark-600;
+    @apply badge bg-gradient-to-r from-dark-100 to-dark-50 text-dark-600 border-gold-200/30;
   }
 
   .section-title {
-    @apply text-3xl font-bold tracking-tight text-dark-900 md:text-4xl;
+    @apply text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-700 via-blue-600 to-slate-600 bg-clip-text text-transparent md:text-4xl;
   }
 
   .section-subtitle {
-    @apply text-lg text-dark-500;
+    @apply text-lg text-slate-600;
+  }
+
+  .nav-link {
+    @apply text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium px-2 py-1 rounded-lg hover:bg-blue-50/50;
+  }
+
+  .nav-link-active {
+    @apply text-sm text-blue-600 hover:text-blue-700 font-semibold px-2 py-1 rounded-lg bg-blue-50/50;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100;
+  }
+
+  .gradient-border {
+    @apply border-2 border-transparent bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400 bg-clip-border;
+  }
+
+  .gold-border {
+    @apply border-2 border-gold-400/50 shadow-[0_0_8px_rgba(245,158,11,0.2)];
   }
 }
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-blue-600 via-blue-500 to-slate-500 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 bg-clip-text text-transparent;
+  }
+
+  .gradient-blue-silver {
+    @apply bg-gradient-to-r from-blue-500 via-blue-400 to-slate-400;
+  }
+
+  .gradient-silver-blue {
+    @apply bg-gradient-to-r from-slate-400 via-slate-300 to-blue-400;
+  }
+
+  .gradient-gold-accent {
+    @apply bg-gradient-to-r from-gold-400 via-gold-300 to-gold-500;
   }
 
   .animate-stagger > * {
@@ -113,4 +152,3 @@
   .animate-stagger > *:nth-child(5) { animation-delay: 200ms; }
   .animate-stagger > *:nth-child(6) { animation-delay: 250ms; }
 }
-

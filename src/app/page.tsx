@@ -60,17 +60,13 @@ export default async function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50/60 via-white to-white text-dark-900">
+    <div className="min-h-screen gradient-bg text-dark-900">
       <SimpleHeader />
 
       <main className="max-w-6xl mx-auto px-4 pb-16">
         {/* Hero */}
-        <section className="relative overflow-hidden rounded-3xl border border-dark-100 bg-white/80 shadow-sm mt-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-accent-50" />
-          <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-primary-200/30 blur-3xl" />
-          <div className="absolute -right-16 bottom-0 h-48 w-48 rounded-full bg-accent-200/30 blur-3xl" />
-
-          <div className="relative px-6 py-14 md:px-12 md:py-16 flex flex-col gap-10 md:flex-row md:items-center">
+        <section className="card mt-8">
+          <div className="px-6 py-12 md:px-12 md:py-16 flex flex-col gap-10 md:flex-row md:items-center">
             <div className="space-y-6 md:w-3/5">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary-100 bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700">
                 <Sparkles className="h-4 w-4" />
@@ -83,7 +79,7 @@ export default async function HomePage() {
                   <span className="text-gradient">Marpeap Digitals</span>
                 </h1>
                 <p className="text-lg text-dark-500 max-w-2xl">
-                  Formations, ressources et produits digitaux prêts à l'emploi pour lancer, automatiser et
+                  Formations, ressources et produits digitaux prêts à l&apos;emploi pour lancer, automatiser et
                   monétiser vos idées plus vite.
                 </p>
               </div>
@@ -115,12 +111,12 @@ export default async function HomePage() {
             </div>
 
             <div className="md:w-2/5">
-              <div className="card bg-white/90 backdrop-blur">
+              <div className="card">
                 <div className="flex items-center gap-3">
                   <BarChart3 className="h-10 w-10 text-primary-600" />
                   <div>
                     <p className="text-sm text-dark-500">Parcours recommandés</p>
-                    <p className="text-lg font-semibold">Focus sur l'impact</p>
+                    <p className="text-lg font-semibold">Focus sur l&apos;impact</p>
                   </div>
                 </div>
 
@@ -140,7 +136,7 @@ export default async function HomePage() {
 
                 <div className="mt-6 flex items-center gap-3 rounded-xl bg-dark-50 px-4 py-3 text-sm text-dark-600">
                   <ShieldCheck className="h-5 w-5 text-primary-600" />
-                  Garantie satisfaction : accompagnement jusqu'à la réussite de votre objectif.
+                  Garantie satisfaction : accompagnement jusqu&apos;à la réussite de votre objectif.
                 </div>
               </div>
             </div>
@@ -150,7 +146,7 @@ export default async function HomePage() {
         {/* Stats */}
         <section className="mt-10 grid gap-4 md:grid-cols-3">
           {stats.map((item) => (
-            <div key={item.label} className="card bg-white">
+            <div key={item.label} className="card">
               <p className="text-3xl font-bold text-primary-600">{item.value}</p>
               <p className="text-sm text-dark-500">{item.label}</p>
             </div>
@@ -163,7 +159,7 @@ export default async function HomePage() {
             <div>
               <p className="text-sm font-semibold uppercase text-primary-600">Pourquoi Marpeap</p>
               <h2 className="section-title mt-1">Pensé pour apprendre et livrer vite</h2>
-              <p className="section-subtitle">Un écosystème cohérent pour passer de l'idée au résultat.</p>
+              <p className="section-subtitle">Un écosystème cohérent pour passer de l&apos;idée au résultat.</p>
             </div>
             <Link href="/products" className="text-sm font-semibold text-primary-700 hover:text-primary-800">
               Découvrir les ressources <ArrowRight className="inline h-4 w-4" />
@@ -215,7 +211,7 @@ export default async function HomePage() {
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase text-primary-600">Méthode</p>
-              <h2 className="section-title mt-1">Un parcours simple pour passer à l'action</h2>
+              <h2 className="section-title mt-1">Un parcours simple pour passer à l&apos;action</h2>
             </div>
           </div>
 
@@ -237,13 +233,13 @@ export default async function HomePage() {
 
         {/* CTA finale */}
         <section className="mt-16">
-          <div className="card bg-gradient-to-r from-primary-600 to-accent-500 text-white">
+          <div className="card gradient-blue-silver text-white border-gold-400/50">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm uppercase font-semibold text-white/80">Prêt à démarrer</p>
-                <h3 className="mt-2 text-2xl font-bold">Lancez votre prochain projet aujourd'hui</h3>
+                <h3 className="mt-2 text-2xl font-bold">Lancez votre prochain projet aujourd&apos;hui</h3>
                 <p className="text-white/80 mt-1">
-                  Accédez à l'ensemble des formations et ressources en quelques secondes.
+                  Accédez à l&apos;ensemble des formations et ressources en quelques secondes.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
@@ -260,7 +256,7 @@ export default async function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-dark-100 py-6 mt-auto bg-white/80">
+      <footer className="border-t-2 border-gold-300/50 py-6 mt-auto bg-gradient-to-r from-white via-blue-50/50 to-slate-50/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 flex flex-col gap-2 text-sm text-dark-500 md:flex-row md:items-center md:justify-between">
           <span>© 2025 Marpeap Digitals. Tous droits réservés.</span>
           <div className="flex items-center gap-4">

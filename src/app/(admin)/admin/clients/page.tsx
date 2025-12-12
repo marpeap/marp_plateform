@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, User, Mail } from "lucide-react";
 import { getAllClients } from "@/lib/supabase/admin";
 import { formatDate } from "@/lib/utils";
@@ -54,12 +55,14 @@ export default async function AdminClientsPage() {
                   <tr key={client.id} className="hover:bg-dark-50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                        <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center relative overflow-hidden">
                           {client.avatar_url ? (
-                            <img
+                            <Image
                               src={client.avatar_url}
                               alt=""
-                              className="h-full w-full rounded-full object-cover"
+                              width={40}
+                              height={40}
+                              className="rounded-full object-cover"
                             />
                           ) : (
                             <User className="h-5 w-5 text-primary-600" />

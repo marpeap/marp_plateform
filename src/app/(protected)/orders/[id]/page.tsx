@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, Download, Package, Check, Truck, Clock } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
@@ -116,10 +117,12 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
             {order.items?.map((item: { id: string; quantity: number; unit_price: number; product?: { name: string; slug: string; image_url: string | null; product_type: string; download_url: string | null } }) => (
               <div key={item.id} className="py-4 flex items-center gap-4">
                 {item.product?.image_url ? (
-                  <img
+                  <Image
                     src={item.product.image_url}
                     alt=""
-                    className="h-16 w-16 rounded-lg object-cover"
+                    width={64}
+                    height={64}
+                    className="rounded-lg object-cover"
                   />
                 ) : (
                   <div className="h-16 w-16 rounded-lg bg-dark-100" />

@@ -4,46 +4,55 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Plus, ArrowLeft, Edit, Trash2, Eye, EyeOff, Loader2 } from "lucide-react";
-import { formatPrice, getProductTypeLabel, cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
-import type { Product } from "@/types";
 
-export default function AdminProductsPage() {
-  const [products, setProducts] = useState<Product[]>([]);
+interface Project {
+  id: string;
+  title: string;
+  description: string | null;
+  image_url: string;
+  external_url: string;
+  display_order: number;
+  is_active: boolean;
+  created_at: string;
+}
+
+export default function AdminProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProducts();
+    fetchProjects();
   }, []);
 
-  const fetchProducts = async () => {
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from("products")
-      .select("*, category:categories(*)")
-      .order("created_at", { ascending: false });
-
-    if (!error && data) {
-      setProducts(data as Product[]);
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch("/api/admin/projects");
+      if (response.ok) {
+        const { data } = await response.json();
+        setProjects(data || []);
+      }
+    } catch (error) {
+      console.error("Error fetching projects:", error);
     }
     setIsLoading(false);
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Êtes-vous sûr de vouloir supprimer "${name}" ?`)) {
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer "${title}" ?`)) {
       return;
     }
 
     setDeletingId(id);
 
     try {
-      const response = await fetch(`/api/admin/products/${id}`, {
+      const response = await fetch(`/api/admin/projects/${id}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
-        setProducts(products.filter(p => p.id !== id));
+        setProjects(projects.filter(p => p.id !== id));
       } else {
         const data = await response.json();
         alert(data.error || "Erreur lors de la suppression");
@@ -57,26 +66,20 @@ export default function AdminProductsPage() {
 
   const toggleActive = async (id: string, currentState: boolean) => {
     try {
-      const response = await fetch(`/api/admin/products/${id}`, {
+      const response = await fetch(`/api/admin/projects/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ is_active: !currentState }),
       });
 
       if (response.ok) {
-        setProducts(products.map(p => 
+        setProjects(projects.map(p => 
           p.id === id ? { ...p, is_active: !currentState } : p
         ));
       }
     } catch (error) {
       alert("Erreur lors de la mise à jour");
     }
-  };
-
-  const typeColors = {
-    digital: "bg-purple-100 text-purple-700",
-    physical: "bg-amber-100 text-amber-700",
-    formation: "bg-blue-100 text-blue-700",
   };
 
   if (isLoading) {
@@ -94,41 +97,38 @@ export default function AdminProductsPage() {
   return (
     <div className="py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <Link href="/admin" className="inline-flex items-center gap-2 text-dark-500 hover:text-primary-600 transition-colors mb-4">
-              <ArrowLeft className="h-4 w-4" />
-              Retour au dashboard
-            </Link>
-            <h1 className="text-3xl font-bold tracking-tight text-dark-900 md:text-4xl">Gestion des produits</h1>
-            <p className="text-lg text-dark-500 mt-2">
-              {products.length} produit{products.length > 1 ? "s" : ""} dans le catalogue
-            </p>
-          </div>
-          <Link href="/admin/products/new" className="btn-primary">
-            <Plus className="h-5 w-5" />
-            Nouveau produit
+        <div className="mb-8">
+          <Link href="/admin" className="inline-flex items-center gap-2 text-dark-500 hover:text-primary-600 transition-colors mb-4">
+            <ArrowLeft className="h-4 w-4" />
+            Retour au dashboard
           </Link>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight text-dark-900 md:text-4xl">Gestion des projets</h1>
+              <p className="text-lg text-dark-500 mt-2">
+                {projects.length} projet{projects.length > 1 ? "s" : ""} dans le portfolio
+              </p>
+            </div>
+            <Link href="/admin/projects/new" className="btn-primary">
+              <Plus className="h-5 w-5" />
+              Nouveau projet
+            </Link>
+          </div>
         </div>
 
-        {/* Products Table */}
         <div className="card overflow-hidden p-0">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-dark-50 border-b border-dark-100">
                 <tr>
                   <th className="text-left px-6 py-4 text-xs font-semibold text-dark-500 uppercase tracking-wider">
-                    Produit
+                    Projet
                   </th>
                   <th className="text-left px-6 py-4 text-xs font-semibold text-dark-500 uppercase tracking-wider">
-                    Type
+                    URL
                   </th>
                   <th className="text-left px-6 py-4 text-xs font-semibold text-dark-500 uppercase tracking-wider">
-                    Prix
-                  </th>
-                  <th className="text-left px-6 py-4 text-xs font-semibold text-dark-500 uppercase tracking-wider">
-                    Stock
+                    Ordre
                   </th>
                   <th className="text-left px-6 py-4 text-xs font-semibold text-dark-500 uppercase tracking-wider">
                     Statut
@@ -139,59 +139,50 @@ export default function AdminProductsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-dark-100">
-                {products.map((product) => (
-                  <tr key={product.id} className="hover:bg-dark-50 transition-colors">
+                {projects.map((project) => (
+                  <tr key={project.id} className="hover:bg-dark-50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
-                        {product.image_url ? (
+                        {project.image_url ? (
                           <Image
-                            src={product.image_url}
-                            alt=""
-                            width={48}
-                            height={48}
+                            src={project.image_url}
+                            alt={project.title}
+                            width={64}
+                            height={64}
                             className="rounded-lg object-cover"
                           />
                         ) : (
-                          <div className="h-12 w-12 rounded-lg bg-dark-100" />
+                          <div className="h-16 w-16 rounded-lg bg-dark-100" />
                         )}
                         <div>
-                          <p className="font-medium text-dark-900">{product.name}</p>
-                          <p className="text-sm text-dark-500 line-clamp-1">{product.description}</p>
+                          <p className="font-medium text-dark-900">{project.title}</p>
+                          {project.description && (
+                            <p className="text-sm text-dark-500 line-clamp-1">{project.description}</p>
+                          )}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={cn("badge", typeColors[product.product_type])}>
-                        {getProductTypeLabel(product.product_type)}
-                      </span>
+                      <a
+                        href={project.external_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary-600 hover:text-primary-700 truncate max-w-xs block"
+                      >
+                        {project.external_url}
+                      </a>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className="font-semibold text-dark-900">
-                        {formatPrice(product.price)}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      {product.product_type === "physical" ? (
-                        <span className={cn(
-                          "font-medium",
-                          product.stock && product.stock > 10 ? "text-green-600" :
-                          product.stock && product.stock > 0 ? "text-amber-600" : "text-red-600"
-                        )}>
-                          {product.stock ?? 0}
-                        </span>
-                      ) : (
-                        <span className="text-dark-400">∞</span>
-                      )}
+                    <td className="px-6 py-4 text-dark-600">
+                      {project.display_order}
                     </td>
                     <td className="px-6 py-4">
                       <button
-                        onClick={() => toggleActive(product.id, product.is_active)}
-                        className={cn(
-                          "inline-flex items-center gap-1 cursor-pointer hover:opacity-80",
-                          product.is_active ? "text-green-600" : "text-dark-400"
-                        )}
+                        onClick={() => toggleActive(project.id, project.is_active)}
+                        className={`inline-flex items-center gap-1 cursor-pointer hover:opacity-80 ${
+                          project.is_active ? "text-green-600" : "text-dark-400"
+                        }`}
                       >
-                        {product.is_active ? (
+                        {project.is_active ? (
                           <>
                             <Eye className="h-4 w-4" />
                             Actif
@@ -207,19 +198,19 @@ export default function AdminProductsPage() {
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
-                          href={`/admin/products/${product.id}`}
+                          href={`/admin/projects/${project.id}`}
                           className="p-2 rounded-lg text-dark-400 hover:text-primary-600 hover:bg-dark-100 transition-colors"
                           title="Modifier"
                         >
                           <Edit className="h-4 w-4" />
                         </Link>
                         <button
-                          onClick={() => handleDelete(product.id, product.name)}
-                          disabled={deletingId === product.id}
+                          onClick={() => handleDelete(project.id, project.title)}
+                          disabled={deletingId === project.id}
                           className="p-2 rounded-lg text-dark-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
                           title="Supprimer"
                         >
-                          {deletingId === product.id ? (
+                          {deletingId === project.id ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
                           ) : (
                             <Trash2 className="h-4 w-4" />
@@ -233,12 +224,12 @@ export default function AdminProductsPage() {
             </table>
           </div>
 
-          {products.length === 0 && (
+          {projects.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-dark-500 mb-4">Aucun produit dans le catalogue</p>
-              <Link href="/admin/products/new" className="btn-primary inline-flex">
+              <p className="text-dark-500 mb-4">Aucun projet dans le portfolio</p>
+              <Link href="/admin/projects/new" className="btn-primary inline-flex">
                 <Plus className="h-5 w-5" />
-                Ajouter le premier produit
+                Ajouter le premier projet
               </Link>
             </div>
           )}
@@ -247,3 +238,4 @@ export default function AdminProductsPage() {
     </div>
   );
 }
+

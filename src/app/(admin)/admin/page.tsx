@@ -70,6 +70,12 @@ export default function AdminPage() {
           </Link>
         </div>
 
+        <div className="mb-6">
+          <Link href="/admin/projects" className="text-sm text-primary-600 hover:text-primary-700 mb-4 inline-block">
+            → Gérer les projets
+          </Link>
+        </div>
+
         <h2 className="font-medium mb-4">Produits ({products.length})</h2>
 
         <div className="border rounded-lg overflow-hidden">

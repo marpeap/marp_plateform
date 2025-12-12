@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SimpleHeader } from "@/components/SimpleHeader";
@@ -27,11 +28,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </Link>
 
         {product.image_url && (
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="w-full h-64 object-cover rounded-lg mb-6"
-          />
+          <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
+            <Image
+              src={product.image_url}
+              alt={product.name}
+              fill
+              className="object-cover"
+            />
+          </div>
         )}
         
         <span className="text-sm text-gray-500 uppercase">

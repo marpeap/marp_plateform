@@ -8,10 +8,17 @@ ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE interactions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 
 -- =============================================
 -- Profiles Policies
 -- =============================================
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own profile" ON profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
+DROP POLICY IF EXISTS "Admins can view all profiles" ON profiles;
+DROP POLICY IF EXISTS "Admins can update all profiles" ON profiles;
 
 -- Users can view their own profile
 CREATE POLICY "Users can view own profile"
@@ -47,6 +54,12 @@ CREATE POLICY "Admins can update all profiles"
 -- =============================================
 -- Categories Policies
 -- =============================================
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Everyone can view categories" ON categories;
+DROP POLICY IF EXISTS "Admins can insert categories" ON categories;
+DROP POLICY IF EXISTS "Admins can update categories" ON categories;
+DROP POLICY IF EXISTS "Admins can delete categories" ON categories;
 
 -- Everyone can view categories
 CREATE POLICY "Everyone can view categories"
@@ -85,6 +98,13 @@ CREATE POLICY "Admins can delete categories"
 -- =============================================
 -- Products Policies
 -- =============================================
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Everyone can view active products" ON products;
+DROP POLICY IF EXISTS "Admins can view all products" ON products;
+DROP POLICY IF EXISTS "Admins can insert products" ON products;
+DROP POLICY IF EXISTS "Admins can update products" ON products;
+DROP POLICY IF EXISTS "Admins can delete products" ON products;
 
 -- Everyone can view active products
 CREATE POLICY "Everyone can view active products"
@@ -134,6 +154,12 @@ CREATE POLICY "Admins can delete products"
 -- Interactions Policies
 -- =============================================
 
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own interactions" ON interactions;
+DROP POLICY IF EXISTS "Users can create own interactions" ON interactions;
+DROP POLICY IF EXISTS "Users can delete own interest" ON interactions;
+DROP POLICY IF EXISTS "Admins can view all interactions" ON interactions;
+
 -- Users can view their own interactions
 CREATE POLICY "Users can view own interactions"
     ON interactions FOR SELECT
@@ -162,6 +188,12 @@ CREATE POLICY "Admins can view all interactions"
 -- =============================================
 -- Orders Policies
 -- =============================================
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own orders" ON orders;
+DROP POLICY IF EXISTS "Users can create own orders" ON orders;
+DROP POLICY IF EXISTS "Admins can view all orders" ON orders;
+DROP POLICY IF EXISTS "Admins can update orders" ON orders;
 
 -- Users can view their own orders
 CREATE POLICY "Users can view own orders"
@@ -197,6 +229,10 @@ CREATE POLICY "Admins can update orders"
 -- Order Items Policies
 -- =============================================
 
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own order items" ON order_items;
+DROP POLICY IF EXISTS "Admins can view all order items" ON order_items;
+
 -- Users can view their own order items
 CREATE POLICY "Users can view own order items"
     ON order_items FOR SELECT
@@ -221,3 +257,57 @@ CREATE POLICY "Admins can view all order items"
         )
     );
 
+-- =============================================
+-- Projects Policies
+-- =============================================
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Everyone can view active projects" ON projects;
+DROP POLICY IF EXISTS "Admins can view all projects" ON projects;
+DROP POLICY IF EXISTS "Admins can insert projects" ON projects;
+DROP POLICY IF EXISTS "Admins can update projects" ON projects;
+DROP POLICY IF EXISTS "Admins can delete projects" ON projects;
+
+-- Everyone can view active projects
+CREATE POLICY "Everyone can view active projects"
+    ON projects FOR SELECT
+    TO authenticated, anon
+    USING (is_active = true);
+
+-- Admins can view all projects
+CREATE POLICY "Admins can view all projects"
+    ON projects FOR SELECT
+    USING (
+        EXISTS (
+            SELECT 1 FROM profiles
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
+-- Only admins can manage projects
+CREATE POLICY "Admins can insert projects"
+    ON projects FOR INSERT
+    WITH CHECK (
+        EXISTS (
+            SELECT 1 FROM profiles
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
+CREATE POLICY "Admins can update projects"
+    ON projects FOR UPDATE
+    USING (
+        EXISTS (
+            SELECT 1 FROM profiles
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
+CREATE POLICY "Admins can delete projects"
+    ON projects FOR DELETE
+    USING (
+        EXISTS (
+            SELECT 1 FROM profiles
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
