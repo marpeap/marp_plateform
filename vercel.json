@@ -1,9 +1,4 @@
 {
-  "version": 2,
-  "buildCommand": "echo 'Static site - no build needed' && exit 0",
-  "outputDirectory": ".",
-  "installCommand": null,
-  "framework": null,
   "headers": [
     {
       "source": "/(.*)",
