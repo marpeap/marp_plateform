@@ -1,0 +1,65 @@
+# robots.txt pour www.marpeap.digital
+# Optimisé pour Google et autres moteurs de recherche
+
+# Autoriser tous les robots à indexer le site
+User-agent: *
+Allow: /
+
+# Autoriser spécifiquement Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Autoriser Googlebot-Image pour les images
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+# Autoriser Googlebot-Mobile
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Autoriser Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Autoriser Slurp (Yahoo)
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Bloquer les robots indésirables
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Fichiers et dossiers à ne pas indexer
+Disallow: /admin.html
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /js/
+Disallow: /css/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.env
+
+# Autoriser les fichiers CSS et JS pour le rendu (Google peut les lire)
+Allow: /css/*.css$
+Allow: /js/*.js$
+
+# Sitemap XML
+Sitemap: https://www.marpeap.digital/sitemap.xml
+
+# Informations supplémentaires
+# Site: www.marpeap.digital
+# Propriétaire: Marpeap Digitals
+# Contact: contact@marpeap.digital
+
