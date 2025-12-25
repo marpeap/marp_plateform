@@ -9,8 +9,11 @@ const EMAILJS_CONFIG = {
   // Service ID EmailJS (trouvable dans Email Services)
   SERVICE_ID: 'service_gvyrpik',
   
-  // Template ID EmailJS (trouvable dans Email Templates)
-  TEMPLATE_ID: 'YOUR_TEMPLATE_ID', // ⚠️ À configurer après création du template
+  // Template ID EmailJS - Notification pour le propriétaire
+  TEMPLATE_ID: 'template_k5lgn2g', // Contact Us - Notification
+  
+  // Template ID EmailJS - Auto-réponse pour le client
+  AUTOREPLY_TEMPLATE_ID: 'template_didr2ab', // Auto-Reply
   
   // Email du destinataire (déjà configuré)
   RECIPIENT_EMAIL: 'adnan.najim@pm.me'
@@ -20,7 +23,8 @@ const EMAILJS_CONFIG = {
 function isEmailJSConfigured() {
   return EMAILJS_CONFIG.PUBLIC_KEY === 'FDKh_5nUofVZbjniz' && // Public Key configurée
          EMAILJS_CONFIG.SERVICE_ID === 'service_gvyrpik' && // Service ID configuré
-         EMAILJS_CONFIG.TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' && // Template ID doit être configuré
+         EMAILJS_CONFIG.TEMPLATE_ID === 'template_k5lgn2g' && // Template ID notification configuré
+         EMAILJS_CONFIG.AUTOREPLY_TEMPLATE_ID === 'template_didr2ab' && // Template ID auto-réponse configuré
          typeof window !== 'undefined' &&
          typeof window.emailjs !== 'undefined';
 }

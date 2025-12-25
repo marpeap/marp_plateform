@@ -1,9 +1,64 @@
+// Function to send auto-reply email to client via EmailJS
+async function sendAutoReply(contactData) {
+  const config = window.EMAILJS_CONFIG;
+  
+  // Vérifier que EmailJS est configuré
+  if (!config || !config.AUTOREPLY_TEMPLATE_ID || !window.emailjs) {
+    console.warn('⚠️ Auto-réponse non configurée ou EmailJS SDK non disponible');
+    return { success: false, reason: 'Auto-reply not configured' };
+  }
+  
+  try {
+    // Préparer les paramètres du template d'auto-réponse
+    const autoReplyParams = {
+      from_name: contactData.name,
+      from_email: contactData.email, // Destinataire de l'auto-réponse
+      service: contactData.service || 'Non spécifié',
+      project_type: contactData.projectType || 'Non spécifié',
+      timeline: contactData.timeline || 'Non spécifié',
+      message: contactData.message,
+      date: new Date().toLocaleString('fr-FR')
+    };
+    
+    // Envoyer l'auto-réponse via EmailJS
+    const response = await window.emailjs.send(
+      config.SERVICE_ID,
+      config.AUTOREPLY_TEMPLATE_ID,
+      autoReplyParams
+    );
+    
+    console.log('✅ Auto-réponse envoyée avec succès:', response);
+    return { success: true, response };
+  } catch (error) {
+    console.error('❌ Erreur lors de l\'envoi de l\'auto-réponse:', error);
+    // Ne pas bloquer le processus si l'auto-réponse échoue
+    return { success: false, error: error.message || error };
+  }
+}
+
 // Function to send email notification via EmailJS
 async function sendEmailNotification(contactData) {
   // Vérifier si EmailJS est configuré et disponible
   if (!window.EMAILJS_CONFIG || !window.isEmailJSConfigured || !window.isEmailJSConfigured()) {
     console.warn('⚠️ EmailJS non configuré. Les notifications par email ne seront pas envoyées.');
     console.warn('💡 Pour configurer EmailJS, modifiez js/emailjs-config.js avec vos identifiants.');
+    
+    // Diagnostic détaillé
+    if (window.EMAILJS_CONFIG) {
+      console.warn('📋 État de la configuration:');
+      console.warn('  - Public Key:', window.EMAILJS_CONFIG.PUBLIC_KEY === 'FDKh_5nUofVZbjniz' ? '✅' : '❌');
+      console.warn('  - Service ID:', window.EMAILJS_CONFIG.SERVICE_ID === 'service_gvyrpik' ? '✅' : '❌');
+      console.warn('  - Template ID (Notification):', window.EMAILJS_CONFIG.TEMPLATE_ID === 'template_k5lgn2g' ? '✅' : '❌');
+      console.warn('  - Template ID (Auto-Reply):', window.EMAILJS_CONFIG.AUTOREPLY_TEMPLATE_ID === 'template_didr2ab' ? '✅' : '❌');
+      console.warn('  - EmailJS SDK:', typeof window.emailjs !== 'undefined' ? '✅' : '❌ NON CHARGÉ');
+      
+      if (window.EMAILJS_CONFIG.TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
+        console.error('❌ PROBLÈME PRINCIPAL: Template ID non configuré !');
+        console.error('💡 Solution: Créez un template dans EmailJS Dashboard et ajoutez le Template ID dans js/emailjs-config.js');
+        console.error('💡 Consultez DEBUG_EMAILJS.md pour les instructions détaillées');
+      }
+    }
+    
     return { success: false, reason: 'EmailJS not configured' };
   }
   
@@ -439,6 +494,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const emailResult = await sendEmailNotification(contactData);
         if (!emailResult.success) {
           console.warn('⚠️ L\'email n\'a pas pu être envoyé, mais le message a été sauvegardé dans Supabase.');
+          console.warn('💡 Raison:', emailResult.reason || emailResult.error);
+          console.warn('💡 Vérifiez DEBUG_EMAILJS.md pour résoudre le problème');
+        }
+        
+        // Send auto-reply to client
+        const autoReplyResult = await sendAutoReply(contactData);
+        if (!autoReplyResult.success) {
+          console.warn('⚠️ L\'auto-réponse n\'a pas pu être envoyée au client.');
         }
       } else {
         // Fallback to localStorage if Supabase is not configured
@@ -457,6 +520,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const emailResult = await sendEmailNotification(contactData);
         if (!emailResult.success) {
           console.warn('⚠️ L\'email n\'a pas pu être envoyé, mais le message a été sauvegardé localement.');
+        }
+        
+        // Send auto-reply to client
+        const autoReplyResult = await sendAutoReply(contactData);
+        if (!autoReplyResult.success) {
+          console.warn('⚠️ L\'auto-réponse n\'a pas pu être envoyée au client.');
         }
       }
     } catch (error) {
