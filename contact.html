@@ -389,15 +389,9 @@
         </div>
     </div>
 
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
-        // Initialiser EmailJS
-        (function(){
-            emailjs.init("YOUR_PUBLIC_KEY"); // À remplacer par votre Public Key EmailJS
-        })();
-    </script>
+    <!-- Supabase Client (gère aussi l'envoi d'emails via Edge Functions) -->
     <script src="js/supabase-client.js?v=2.1.0"></script>
+    <!-- Scripts principaux -->
     <script src="js/main.js?v=2.1.0"></script>
     <script src="js/contact.js?v=2.1.0"></script>
 </body>
