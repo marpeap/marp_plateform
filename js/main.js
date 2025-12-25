@@ -97,6 +97,30 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // "Voir plus" button for About section
+  const btnVoirPlus = document.getElementById('btnVoirPlus');
+  const aboutTextHidden = document.getElementById('aboutTextHidden');
+  const btnVoirPlusText = document.getElementById('btnVoirPlusText');
+  
+  if (btnVoirPlus && aboutTextHidden && btnVoirPlusText) {
+    btnVoirPlus.addEventListener('click', function() {
+      const isExpanded = aboutTextHidden.classList.contains('expanded');
+      
+      aboutTextHidden.classList.toggle('expanded');
+      btnVoirPlus.classList.toggle('expanded');
+      
+      // Update button text
+      btnVoirPlusText.textContent = isExpanded ? 'Voir plus' : 'Voir moins';
+      
+      // Scroll to button if expanding (to show the new content)
+      if (!isExpanded) {
+        setTimeout(() => {
+          btnVoirPlus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      }
+    });
+  }
 });
 
 // Utility functions

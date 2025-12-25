@@ -16,7 +16,7 @@ const EMAILJS_CONFIG = {
   AUTOREPLY_TEMPLATE_ID: 'template_didr2ab', // Auto-Reply
   
   // Email du destinataire (déjà configuré)
-  RECIPIENT_EMAIL: 'adnan.najim@pm.me'
+  RECIPIENT_EMAIL: 'marpeap@gmail.com'
 };
 
 // Vérifier si EmailJS est configuré

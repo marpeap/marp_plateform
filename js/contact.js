@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', function() {
         await window.supabaseClient.insertContact(contactData);
         success = true;
         
-        // Send email notification to adnan.najim@pm.me
+        // Send email notification to marpeap@gmail.com
         const emailResult = await sendEmailNotification(contactData);
         if (!emailResult.success) {
           console.warn('⚠️ L\'email n\'a pas pu être envoyé, mais le message a été sauvegardé dans Supabase.');

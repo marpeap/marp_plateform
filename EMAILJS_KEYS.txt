@@ -8,5 +8,5 @@ Private Key (pour API server-side uniquement): AZhlCMvJifqWnxpcCwxlQ
 Service ID: service_gvyrpik
 Template ID: À configurer après création du template dans EmailJS Dashboard
 
-Recipient Email: adnan.najim@pm.me
+Recipient Email: marpeap@gmail.com
 
