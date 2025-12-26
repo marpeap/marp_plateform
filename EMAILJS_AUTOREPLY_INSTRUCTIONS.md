@@ -201,3 +201,4 @@ Vous pouvez personnaliser l'auto-réponse en modifiant :
 - [Template de notification](EMAILJS_TEMPLATE.html)
 - [Guide de configuration EmailJS](EMAILJS_SETUP.md)
 
+

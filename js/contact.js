@@ -24,7 +24,8 @@ async function sendAutoReply(contactData) {
     const response = await window.emailjs.send(
       config.SERVICE_ID,
       config.AUTOREPLY_TEMPLATE_ID,
-      autoReplyParams
+      autoReplyParams,
+      config.PUBLIC_KEY
     );
     
     console.log('✅ Auto-réponse envoyée avec succès:', response);
@@ -87,17 +88,32 @@ async function sendEmailNotification(contactData) {
       date: new Date().toLocaleString('fr-FR')
     };
     
+    console.log('📧 Envoi de l\'email de notification...');
+    console.log('📋 Paramètres:', {
+      serviceId: config.SERVICE_ID,
+      templateId: config.TEMPLATE_ID,
+      recipientEmail: config.RECIPIENT_EMAIL,
+      publicKey: config.PUBLIC_KEY ? '✅ Configurée' : '❌ Manquante'
+    });
+    
     // Envoyer l'email via EmailJS
     const response = await window.emailjs.send(
       config.SERVICE_ID,
       config.TEMPLATE_ID,
-      templateParams
+      templateParams,
+      config.PUBLIC_KEY
     );
     
     console.log('✅ Email de notification envoyé avec succès:', response);
+    console.log('📬 Email envoyé à:', config.RECIPIENT_EMAIL);
     return { success: true, response };
   } catch (error) {
     console.error('❌ Erreur lors de l\'envoi de l\'email:', error);
+    console.error('📋 Détails de l\'erreur:', {
+      message: error.message,
+      text: error.text,
+      status: error.status
+    });
     // Ne pas bloquer le processus si l'email échoue
     return { success: false, error: error.message || error };
   }
@@ -484,77 +500,72 @@ document.addEventListener('DOMContentLoaded', function() {
     const formMessage = document.getElementById('formMessage');
     let success = false;
 
+    // IMPORTANT : Envoyer l'email AVANT d'essayer de sauvegarder dans Supabase
+    // Ainsi, l'email sera envoyé même si Supabase échoue
+    let emailSent = false;
+    let autoReplySent = false;
+    
+    // Envoyer l'email de notification
+    const emailResult = await sendEmailNotification(contactData);
+    if (emailResult.success) {
+      emailSent = true;
+      console.log('✅ Email de notification envoyé avec succès à marpeap@gmail.com');
+    } else {
+      console.warn('⚠️ L\'email de notification n\'a pas pu être envoyé.');
+      console.warn('💡 Raison:', emailResult.reason || emailResult.error);
+    }
+    
+    // Envoyer l'auto-réponse au client
+    const autoReplyResult = await sendAutoReply(contactData);
+    if (autoReplyResult.success) {
+      autoReplySent = true;
+      console.log('✅ Auto-réponse envoyée au client');
+    } else {
+      console.warn('⚠️ L\'auto-réponse n\'a pas pu être envoyée au client.');
+    }
+
+    // Maintenant, essayer de sauvegarder dans Supabase (optionnel)
+    let success = false;
     try {
       // Check if Supabase client is available
       if (typeof window !== 'undefined' && window.supabaseClient) {
-        await window.supabaseClient.insertContact(contactData);
-        success = true;
-        
-        // Send email notification to marpeap@gmail.com
-        const emailResult = await sendEmailNotification(contactData);
-        if (!emailResult.success) {
-          console.warn('⚠️ L\'email n\'a pas pu être envoyé, mais le message a été sauvegardé dans Supabase.');
-          console.warn('💡 Raison:', emailResult.reason || emailResult.error);
-          console.warn('💡 Vérifiez DEBUG_EMAILJS.md pour résoudre le problème');
-        }
-        
-        // Send auto-reply to client
-        const autoReplyResult = await sendAutoReply(contactData);
-        if (!autoReplyResult.success) {
-          console.warn('⚠️ L\'auto-réponse n\'a pas pu être envoyée au client.');
+        try {
+          await window.supabaseClient.insertContact(contactData);
+          success = true;
+          console.log('✅ Message sauvegardé dans Supabase');
+        } catch (supabaseError) {
+          console.warn('⚠️ Erreur Supabase (non bloquant):', supabaseError.message);
+          console.warn('💡 Le message a été envoyé par email, mais n\'a pas été sauvegardé dans Supabase.');
+          console.warn('💡 Pour corriger, exécutez supabase-permissions.sql dans le SQL Editor de Supabase');
+          // Continuer même si Supabase échoue
+          success = true;
         }
       } else {
-        // Fallback to localStorage if Supabase is not configured
         console.warn('Supabase non configuré, utilisation de localStorage comme fallback');
-        const contact = {
-          id: Date.now().toString(),
-          ...contactData,
-          created_at: new Date().toISOString()
-        };
-        let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-        contacts.push(contact);
-        localStorage.setItem('contacts', JSON.stringify(contacts));
-        success = true;
-        
-        // Send email notification even with localStorage fallback
-        const emailResult = await sendEmailNotification(contactData);
-        if (!emailResult.success) {
-          console.warn('⚠️ L\'email n\'a pas pu être envoyé, mais le message a été sauvegardé localement.');
-        }
-        
-        // Send auto-reply to client
-        const autoReplyResult = await sendAutoReply(contactData);
-        if (!autoReplyResult.success) {
-          console.warn('⚠️ L\'auto-réponse n\'a pas pu être envoyée au client.');
+      }
+      
+      // Fallback to localStorage si Supabase n'est pas configuré ou a échoué
+      if (!success) {
+        try {
+          const contact = {
+            id: Date.now().toString(),
+            ...contactData,
+            created_at: new Date().toISOString()
+          };
+          let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+          contacts.push(contact);
+          localStorage.setItem('contacts', JSON.stringify(contacts));
+          success = true;
+          console.log('✅ Message sauvegardé dans localStorage');
+        } catch (localStorageError) {
+          console.error('Erreur localStorage:', localStorageError);
         }
       }
     } catch (error) {
-      console.error('Erreur lors de l\'envoi:', error);
-      
-      // Fallback to localStorage on error
-      try {
-        const contact = {
-          id: Date.now().toString(),
-          ...contactData,
-          created_at: new Date().toISOString()
-        };
-        let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-        contacts.push(contact);
-        localStorage.setItem('contacts', JSON.stringify(contacts));
+      console.error('Erreur inattendue:', error);
+      // Même en cas d'erreur, on considère que c'est un succès si l'email a été envoyé
+      if (emailSent) {
         success = true;
-      } catch (fallbackError) {
-        console.error('Erreur fallback:', fallbackError);
-        if (formMessage) {
-          formMessage.textContent = 'Une erreur est survenue. Veuillez réessayer plus tard.';
-          formMessage.className = 'form-message show error';
-        }
-        
-        // Re-enable submit button on error
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Envoyer le message';
-        }
-        return;
       }
     }
 

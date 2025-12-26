@@ -31,23 +31,50 @@ function isEmailJSConfigured() {
 
 // Initialiser EmailJS si configuré
 if (typeof window !== 'undefined') {
-  if (EMAILJS_CONFIG.PUBLIC_KEY === 'FDKh_5nUofVZbjniz' && typeof window.emailjs !== 'undefined') {
-    try {
-      window.emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-      console.log('✅ EmailJS initialisé avec succès');
-    } catch (error) {
-      console.error('❌ Erreur lors de l\'initialisation EmailJS:', error);
-    }
-  } else {
-    if (EMAILJS_CONFIG.PUBLIC_KEY === 'FDKh_5nUofVZbjniz') {
-      console.warn('⚠️ EmailJS SDK non chargé. Vérifiez que le script EmailJS est inclus dans contact.html');
+  // Exporter la configuration immédiatement
+  window.EMAILJS_CONFIG = EMAILJS_CONFIG;
+  window.isEmailJSConfigured = isEmailJSConfigured;
+  
+  // Fonction pour initialiser EmailJS une fois le SDK chargé
+  function initEmailJS() {
+    if (EMAILJS_CONFIG.PUBLIC_KEY === 'FDKh_5nUofVZbjniz' && typeof window.emailjs !== 'undefined') {
+      try {
+        window.emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+        console.log('✅ EmailJS initialisé avec succès');
+        return true;
+      } catch (error) {
+        console.error('❌ Erreur lors de l\'initialisation EmailJS:', error);
+        return false;
+      }
     } else {
-      console.warn('⚠️ EmailJS non configuré. Les emails ne seront pas envoyés.');
+      if (EMAILJS_CONFIG.PUBLIC_KEY === 'FDKh_5nUofVZbjniz') {
+        console.warn('⚠️ EmailJS SDK non chargé. Vérifiez que le script EmailJS est inclus dans contact.html');
+      } else {
+        console.warn('⚠️ EmailJS non configuré. Les emails ne seront pas envoyés.');
+      }
+      return false;
     }
   }
   
-  // Exporter la configuration
-  window.EMAILJS_CONFIG = EMAILJS_CONFIG;
-  window.isEmailJSConfigured = isEmailJSConfigured;
+  // Essayer d'initialiser immédiatement si le SDK est déjà chargé
+  if (typeof window.emailjs !== 'undefined') {
+    initEmailJS();
+  } else {
+    // Attendre que le SDK soit chargé
+    window.addEventListener('load', function() {
+      if (typeof window.emailjs !== 'undefined') {
+        initEmailJS();
+      } else {
+        // Attendre un peu plus si le SDK n'est pas encore chargé
+        setTimeout(function() {
+          if (typeof window.emailjs !== 'undefined') {
+            initEmailJS();
+          } else {
+            console.warn('⚠️ EmailJS SDK non chargé après le chargement de la page.');
+          }
+        }, 1000);
+      }
+    });
+  }
 }
 

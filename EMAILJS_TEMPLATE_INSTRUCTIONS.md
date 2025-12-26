@@ -112,3 +112,4 @@ Une fois configuré :
 - [Documentation EmailJS Templates](https://www.emailjs.com/docs/user-guide/creating-email-templates/)
 - [Guide de configuration EmailJS](EMAILJS_SETUP.md)
 
+
