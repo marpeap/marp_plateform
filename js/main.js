@@ -121,6 +121,78 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // Service Modals Management
+  const serviceCards = document.querySelectorAll('.service-card[data-service]');
+  const serviceModals = document.querySelectorAll('.service-modal');
+  const modalOverlays = document.querySelectorAll('.service-modal-overlay');
+  const modalCloseButtons = document.querySelectorAll('.service-modal-close');
+
+  // Open modal when clicking on a service card
+  serviceCards.forEach(card => {
+    card.addEventListener('click', function(e) {
+      const serviceId = this.getAttribute('data-service');
+      const modal = document.getElementById(`modal-${serviceId}`);
+      
+      if (modal) {
+        e.preventDefault();
+        e.stopPropagation();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+    });
+  });
+
+  // Close modal functions
+  function closeModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+  }
+
+  // Close modal when clicking on close button
+  modalCloseButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const modal = this.closest('.service-modal');
+      if (modal) {
+        closeModal(modal);
+      }
+    });
+  });
+
+  // Close modal when clicking on overlay
+  modalOverlays.forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const modal = this.closest('.service-modal');
+      if (modal) {
+        closeModal(modal);
+      }
+    });
+  });
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      serviceModals.forEach(modal => {
+        if (modal.classList.contains('active')) {
+          closeModal(modal);
+        }
+      });
+    }
+  });
+
+  // Prevent modal content clicks from closing the modal
+  serviceModals.forEach(modal => {
+    const modalContent = modal.querySelector('.service-modal-content');
+    if (modalContent) {
+      modalContent.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    }
+  });
 });
 
 // Utility functions

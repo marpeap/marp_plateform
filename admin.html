@@ -26,6 +26,7 @@
                 </a>
                 <div class="admin-nav-links">
                     <a href="admin.html#dashboard" class="admin-nav-link active">Dashboard</a>
+                    <a href="admin.html#services" class="admin-nav-link">Services</a>
                     <a href="admin.html#clients" class="admin-nav-link">Clients</a>
                     <a href="index.html" class="admin-nav-link">Retour au site</a>
                     <button id="logoutBtn" class="btn btn-outline btn-sm">Déconnexion</button>
@@ -102,6 +103,26 @@
                     <div class="actions-buttons">
                         <a href="admin.html#clients" class="btn btn-secondary">Gérer les clients</a>
                         <a href="contact.html" class="btn btn-secondary">Voir le formulaire de contact</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="admin-section">
+                <div class="admin-header">
+                    <h1>Gestion des Services</h1>
+                    <p>Modifiez les services, prix et comparatifs affichés sur le site</p>
+                </div>
+
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h2>Liste des Services</h2>
+                        <button id="saveAllServices" class="btn btn-primary btn-sm">Sauvegarder toutes les modifications</button>
+                    </div>
+                    <div class="admin-card-body">
+                        <div id="servicesList" class="services-admin-list">
+                            <!-- Services will be loaded here -->
+                        </div>
                     </div>
                 </div>
             </section>
