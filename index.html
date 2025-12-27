@@ -71,10 +71,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet"></noscript>
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://www.google.com">
     <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="assets/images/marpeap.png" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/images/background.png" as="image">
     
     <!-- Stylesheet avec versioning -->
     <link rel="stylesheet" href="css/style.css?v=2.1.0">
@@ -236,8 +241,8 @@
         <div class="container">
             <div class="nav-content">
                 <a href="index.html" class="logo" aria-label="Marpeap Digitals - Accueil">
-                    <img src="assets/images/marpeap.png" alt="Marpeap Digitals - Logo - Développeur Web Indépendant" class="logo-img logo-img-dark" width="180" height="180" loading="eager">
-                    <img src="assets/images/marpeap2.png" alt="Marpeap Digitals - Logo - Développeur Web Indépendant" class="logo-img logo-img-light" width="180" height="180" loading="eager" style="display: none;">
+                    <img src="assets/images/marpeap.png" alt="Marpeap Digitals - Logo - Développeur Web Indépendant" class="logo-img logo-img-dark" width="180" height="180" loading="eager" fetchpriority="high">
+                    <img src="assets/images/marpeap2.png" alt="Marpeap Digitals - Logo - Développeur Web Indépendant" class="logo-img logo-img-light" width="180" height="180" loading="lazy" style="display: none;">
                 </a>
                 <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
                     <span></span>
@@ -2093,7 +2098,7 @@
                 <div class="portfolio-item">
                     <div class="portfolio-card">
                         <div class="portfolio-icon portfolio-icon-github">
-                            <img src="assets/images/git.png" alt="GitHub" style="width: 100%; height: 100%; object-fit: contain;">
+                            <img src="assets/images/git.png" alt="GitHub" style="width: 100%; height: 100%; object-fit: contain;" loading="lazy">
                         </div>
                         <h3 class="portfolio-title">GitHub</h3>
                         <p class="portfolio-description">Découvrez mes projets open-source et contributions sur GitHub</p>
@@ -2191,9 +2196,9 @@
         </div>
     </footer>
 
-    <script src="js/theme-toggle.js?v=2.1.0"></script>
-    <script src="js/main.js?v=2.1.0"></script>
-    <script src="js/services-sync.js?v=2.1.0"></script>
+    <script src="js/theme-toggle.js?v=2.1.0" defer></script>
+    <script src="js/main.js?v=2.1.0" defer></script>
+    <script src="js/services-sync.js?v=2.1.0" defer></script>
 </body>
 </html>
 

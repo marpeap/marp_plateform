@@ -39,6 +39,9 @@
   --transition-transform: transform 0.3s ease;
   --transition-opacity: opacity 0.4s ease;
   --transition-shimmer: left 0.5s ease;
+  
+  /* Optimisations de performance */
+  --gpu-accelerated: translateZ(0);
 }
 
 /* Variables CSS - Mode Clair */
@@ -51,6 +54,50 @@
   --text-secondary: #2d2d2d;
   --text-muted: #5a5a5a;
   --border-color: rgba(37, 99, 235, 0.25);
+}
+
+/* Optimisations de performance */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimisations de performance */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+  isolation: isolate;
+}
+
+.service-card,
+.portfolio-card,
+.why-card,
+.process-step,
+.mission-card {
+  will-change: transform;
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+.service-card:hover,
+.portfolio-card:hover,
+.why-card:hover,
+.process-step:hover,
+.mission-card:hover {
+  will-change: transform, box-shadow;
+}
+
+.service-card:not(:hover),
+.portfolio-card:not(:hover),
+.why-card:not(:hover),
+.process-step:not(:hover),
+.mission-card:not(:hover) {
+  will-change: auto;
 }
 
 /* ============================================
@@ -604,7 +651,7 @@ body > * {
   transition: var(--transition-smooth);
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
   position: relative;
-  z-index: 2;
+  z-index: 1001;
 }
 
 .btn-call-mobile:hover {
@@ -664,6 +711,9 @@ body > * {
   width: 100%;
   height: 100%;
   z-index: 0;
+  will-change: contents;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .hero-slide {
@@ -677,6 +727,8 @@ body > * {
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 2s ease-in-out;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 .hero-slide::before {
@@ -692,6 +744,7 @@ body > * {
 .hero-slide-active {
   opacity: 1;
   z-index: 1;
+  will-change: auto;
 }
 
 .hero::before {
@@ -783,6 +836,8 @@ body > * {
   max-width: 800px;
   animation: fadeIn 1s ease-out;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .hero-title {
@@ -1014,14 +1069,16 @@ body > * {
 /* Scroll Reveal Animations */
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(50px);
+  transform: translate3d(0, 50px, 0);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
 .scroll-reveal.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 /* Stagger animation for cards */
@@ -2655,6 +2712,23 @@ body > * {
 .contact-section > .container {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .contact-section > .container {
+    padding: 0 0.75rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section > .container {
+    padding: 0 0.5rem;
+    max-width: 100%;
+  }
 }
 
 .contact-header {
@@ -2707,7 +2781,9 @@ body > * {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   border: 1px solid rgba(37, 99, 235, 0.3);
-  overflow: hidden;
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-form-container::before {
@@ -3045,12 +3121,15 @@ body > * {
   color: #fca5a5;
   font-size: 0.875rem;
   margin-top: 0.5rem;
+  margin-bottom: 0;
   display: none;
   padding: 0.5rem;
   background: rgba(239, 68, 68, 0.1);
   border-left: 3px solid #ef4444;
   border-radius: 0.25rem;
   animation: slideDown 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .error-message.show {
@@ -3061,6 +3140,9 @@ body > * {
   padding: 1rem;
   border-radius: 0.5rem;
   display: none;
+  margin: 1rem 0 0;
+  position: relative;
+  z-index: 1;
 }
 
 .form-message.show {
@@ -3189,6 +3271,7 @@ body > * {
   .navbar {
     min-height: 120px;
     overflow: visible;
+    z-index: 1000;
   }
 
   .navbar::before {
@@ -3205,6 +3288,8 @@ body > * {
     padding: 1rem 0;
     flex-wrap: wrap;
     gap: 1rem;
+    position: relative;
+    z-index: 1;
   }
 
   .btn-call-mobile {
@@ -3213,6 +3298,10 @@ body > * {
     width: 100%;
     justify-content: center;
     margin-top: 0.5rem;
+    position: relative;
+    z-index: 1001;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .logo {
@@ -3259,7 +3348,7 @@ body > * {
 
   .nav-menu {
     position: fixed;
-    top: 70px;
+    top: 120px;
     left: -100%;
     width: 100%;
     background: rgba(10, 10, 15, 0.98);
@@ -3273,6 +3362,7 @@ body > * {
       0 0 30px rgba(37, 99, 235, 0.2);
     border-bottom: 1px solid rgba(37, 99, 235, 0.3);
     transition: var(--transition);
+    z-index: 999;
   }
 
   .nav-menu.active {
@@ -3424,8 +3514,12 @@ body > * {
   }
 
   .contact-section {
-    padding: 10rem 0 4rem;
+    padding: 8rem 0 3rem;
     min-height: auto;
+  }
+
+  .contact-section > .container {
+    padding: 0 1rem;
   }
 
   .contact-section::before {
@@ -3435,18 +3529,31 @@ body > * {
 
   .contact-header {
     margin-bottom: 2rem;
+    padding: 0;
+    width: 100%;
   }
 
   .contact-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
   }
 
   .contact-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 
   .contact-form-container {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
+    margin: 0;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .contact-form {
+    gap: 1.5rem;
   }
 
   .form-row {
@@ -3455,23 +3562,59 @@ body > * {
   }
 
   .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .form-group:last-of-type {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group .error-message {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    padding: 0.5rem;
+    font-size: 0.8rem;
   }
 
   .form-group label {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
   }
 
   .form-group input,
   .form-group textarea,
+  .form-group select,
   .modal-trigger {
     font-size: 0.95rem;
-    padding: 0.75rem;
+    padding: 0.875rem 1rem;
   }
 
-  .btn-submit {
+  .form-group textarea {
+    min-height: 120px;
+  }
+
+  .form-message {
+    margin: 1rem 0 0;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .form-actions {
+    margin-top: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .form-divider {
+    margin: 0.75rem 0;
+  }
+
+  .btn-submit,
+  .btn-appointment {
     width: 100%;
     padding: 1rem;
+    font-size: 1rem;
+    margin: 0;
   }
 
   .section-header {
@@ -3539,8 +3682,75 @@ body > * {
     padding: 1.25rem;
   }
 
+  .contact-section {
+    padding: 7rem 0 2rem;
+  }
+
+  .contact-section > .container {
+    padding: 0 0.75rem;
+  }
+
+  .contact-header {
+    margin-bottom: 1.5rem;
+    padding: 0;
+    width: 100%;
+  }
+
+  .contact-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-subtitle {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
   .contact-form-container {
-    padding: 1rem;
+    padding: 1.25rem 0.75rem;
+    margin: 0;
+    border-radius: 0.875rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .contact-form {
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .form-group .error-message {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    padding: 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .form-group textarea {
+    min-height: 100px;
+  }
+
+  .form-actions {
+    margin-top: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .btn-submit,
+  .btn-appointment {
+    padding: 0.875rem;
+    font-size: 0.95rem;
   }
 
   .modal-content {

@@ -42,16 +42,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Navbar glassmorphism effect on scroll
+  // Navbar glassmorphism effect on scroll (optimisé avec throttle)
   const navbar = document.getElementById('navbar');
   if (navbar) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 50) {
+    let lastScroll = 0;
+    let ticking = false;
+    
+    function updateNavbar() {
+      const scrollY = window.pageYOffset;
+      if (scrollY > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
-    });
+      lastScroll = scrollY;
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavbar);
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
   // Active nav link highlighting
@@ -64,38 +77,52 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Scroll reveal animations (inspired by Digital Cover)
+  // Scroll reveal animations (optimisé avec IntersectionObserver)
   const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.05,
+    rootMargin: '50px 0px -50px 0px'
   };
 
   const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
+        // Utiliser requestAnimationFrame pour une animation fluide
+        requestAnimationFrame(() => {
+          entry.target.classList.add('revealed');
+        });
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  // Observe sections and cards
-  document.querySelectorAll('section, .service-card, .portfolio-card, .mission-card').forEach(el => {
+  // Observe sections and cards (chargement progressif)
+  const elementsToObserve = document.querySelectorAll('section, .service-card, .portfolio-card, .mission-card, .why-card, .process-step');
+  elementsToObserve.forEach(el => {
     el.classList.add('scroll-reveal');
     observer.observe(el);
   });
 
-  // Parallax effect for hero section
+  // Parallax effect for hero section (optimisé avec requestAnimationFrame)
   const hero = document.querySelector('.hero');
   if (hero) {
-    window.addEventListener('scroll', function() {
+    let ticking = false;
+    const heroContent = hero.querySelector('.hero-content');
+    
+    function updateParallax() {
       const scrolled = window.pageYOffset;
-      const heroContent = hero.querySelector('.hero-content');
       if (heroContent && scrolled < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+        heroContent.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0)`;
         heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
       }
-    });
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
   // "Voir plus" button for About section
@@ -211,20 +238,44 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Hero Slideshow
+// Hero Slideshow (optimisé)
 document.addEventListener('DOMContentLoaded', function() {
   const heroSlides = document.querySelectorAll('.hero-slide');
   let currentSlide = 0;
+  let slideInterval = null;
+  let isPageVisible = true;
   
   if (heroSlides.length > 0) {
+    // Précharger les images de fond
+    const imageUrls = ['assets/images/background.png', 'assets/images/img1j.png', 'assets/images/img3.png'];
+    imageUrls.forEach(url => {
+      const img = new Image();
+      img.src = url;
+    });
+    
     function nextSlide() {
+      if (!isPageVisible) return;
+      
       heroSlides[currentSlide].classList.remove('hero-slide-active');
       currentSlide = (currentSlide + 1) % heroSlides.length;
       heroSlides[currentSlide].classList.add('hero-slide-active');
     }
     
-    // Change slide every 5 seconds
-    setInterval(nextSlide, 5000);
+    // Démarrer le slideshow après un court délai pour laisser le temps au chargement
+    setTimeout(() => {
+      slideInterval = setInterval(nextSlide, 5000);
+    }, 1000);
+    
+    // Pause le slideshow quand la page n'est pas visible
+    document.addEventListener('visibilitychange', function() {
+      isPageVisible = !document.hidden;
+      if (isPageVisible && !slideInterval) {
+        slideInterval = setInterval(nextSlide, 5000);
+      } else if (!isPageVisible && slideInterval) {
+        clearInterval(slideInterval);
+        slideInterval = null;
+      }
+    });
   }
 });
 
