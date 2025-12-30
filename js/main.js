@@ -1,3 +1,18 @@
+// Loading Screen
+window.addEventListener('load', function() {
+  const loadingScreen = document.getElementById('loadingScreen');
+  if (loadingScreen) {
+    // Attendre un peu pour que l'animation soit visible
+    setTimeout(function() {
+      loadingScreen.classList.add('hidden');
+      // Retirer complètement du DOM après l'animation
+      setTimeout(function() {
+        loadingScreen.style.display = 'none';
+      }, 600);
+    }, 500);
+  }
+});
+
 // Navigation mobile toggle
 document.addEventListener('DOMContentLoaded', function() {
   const navToggle = document.getElementById('navToggle');

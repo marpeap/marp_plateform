@@ -97,3 +97,6 @@ settings.local.json
 
 # Fichiers de base de connaissances chatbot (optionnel)
 # CHATBOT_KNOWLEDGE_BASE.txt  # Décommenter si vous ne voulez pas versionner ce fichier
+
+# Dossier fonctions - fichiers non nécessaires au site web
+fonctions/

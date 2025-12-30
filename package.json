@@ -1,9 +1,0 @@
-{
-  "name": "marpeap-digitals",
-  "version": "2.1.0",
-  "private": true,
-  "description": "Site vitrine statique pour Marpeap Digitals",
-  "scripts": {
-    "build": "echo 'Static site - no build needed'"
-  }
-}
