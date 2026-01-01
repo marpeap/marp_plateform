@@ -2766,16 +2766,10 @@ body > * {
 .portfolio-item:nth-child(2) .portfolio-card,
 .portfolio-card.portfolio-manylovr {
   border-color: rgba(147, 51, 234, 0.4);
-  background: 
-    linear-gradient(135deg, 
-      rgba(30, 15, 30, 0.85) 0%,
-      rgba(88, 28, 135, 0.9) 50%,
-      rgba(30, 15, 30, 0.85) 100%
-    ),
-    url('../assets/images/manylovr.png');
-  background-size: cover, cover;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
+  background: url('../assets/images/manylovr.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimize-contrast;
   will-change: auto;
@@ -2788,18 +2782,12 @@ body > * {
 
 .portfolio-item:nth-child(2) .portfolio-card::before,
 .portfolio-card.portfolio-manylovr::before {
-  background: linear-gradient(90deg, 
-    var(--primary-purple),
-    var(--primary-pink),
-    var(--primary-purple)
-  );
-  background-size: 200% 100%;
-  animation: gradient-flow 3s ease infinite;
+  display: none;
 }
 
 .portfolio-item:nth-child(2) .portfolio-card::after,
 .portfolio-card.portfolio-manylovr::after {
-  background: radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, rgba(236, 72, 153, 0.1) 50%, transparent 70%);
+  display: none;
 }
 
 .portfolio-item:nth-child(2) .portfolio-card:hover,
