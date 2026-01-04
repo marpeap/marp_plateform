@@ -71,7 +71,6 @@
 section {
   content-visibility: auto;
   contain-intrinsic-size: auto 500px;
-  isolation: isolate;
 }
 
 .service-card,
@@ -79,25 +78,8 @@ section {
 .why-card,
 .process-step,
 .mission-card {
-  will-change: transform;
-  contain: layout style paint;
-  transform: translateZ(0);
-}
-
-.service-card:hover,
-.portfolio-card:hover,
-.why-card:hover,
-.process-step:hover,
-.mission-card:hover {
-  will-change: transform, box-shadow;
-}
-
-.service-card:not(:hover),
-.portfolio-card:not(:hover),
-.why-card:not(:hover),
-.process-step:not(:hover),
-.mission-card:not(:hover) {
   will-change: auto;
+  contain: layout style;
 }
 
 /* ============================================
@@ -327,7 +309,7 @@ section {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -1086,7 +1068,7 @@ body > * {
 }
 
 .btn-primary:hover {
-  transform: translateY(-4px) scale(1.05);
+  transform: translateY(-2px);
   box-shadow: 
     0 15px 40px rgba(37, 99, 235, 0.5),
     0 0 60px rgba(147, 51, 234, 0.4);
@@ -1119,7 +1101,7 @@ body > * {
   box-shadow: 
     0 0 40px rgba(37, 99, 235, 0.6),
     0 10px 30px rgba(37, 99, 235, 0.3);
-  transform: translateY(-4px) scale(1.05);
+  transform: translateY(-2px);
 }
 
 .btn-outline:focus-visible,
@@ -1222,18 +1204,17 @@ body > * {
   border-radius: 4px;
 }
 
-/* Scroll Reveal Animations */
+/* Scroll Reveal Animations - Désactivées pour performance */
 .scroll-reveal {
-  opacity: 0;
-  transform: translate3d(0, 50px, 0);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, opacity;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
 }
 
 .scroll-reveal.revealed {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: none;
   will-change: auto;
 }
 
@@ -1428,7 +1409,7 @@ body > * {
     0 0 150px rgba(37, 99, 235, 0.2),
     0 0 0 1px rgba(255, 255, 255, 0.2) inset,
     inset 0 1px 3px rgba(255, 255, 255, 0.15);
-  transform: translateY(-10px) scale(1.04);
+  transform: translateY(-3px);
 }
 
 /* Service Card Purple - Application sur mesure */
@@ -1474,7 +1455,7 @@ body > * {
     0 0 150px rgba(147, 51, 234, 0.2),
     0 0 0 1px rgba(255, 255, 255, 0.2) inset,
     inset 0 1px 3px rgba(255, 255, 255, 0.15);
-  transform: translateY(-10px) scale(1.04);
+  transform: translateY(-3px);
 }
 
 /* Service Card Cyan - Optimisation */
@@ -1520,7 +1501,7 @@ body > * {
     0 0 150px rgba(6, 182, 212, 0.2),
     0 0 0 1px rgba(255, 255, 255, 0.2) inset,
     inset 0 1px 3px rgba(255, 255, 255, 0.15);
-  transform: translateY(-10px) scale(1.04);
+  transform: translateY(-3px);
 }
 
 .service-card::before {
@@ -1582,7 +1563,7 @@ body > * {
 }
 
 .service-card:hover {
-  transform: translateY(-10px) scale(1.04);
+  transform: translateY(-3px);
 }
 
 .service-card > * {
@@ -1619,7 +1600,7 @@ body > * {
 }
 
 .service-card-blue:hover .service-icon {
-  transform: scale(1.2) rotate(8deg);
+  transform: scale(1.05);
   filter: drop-shadow(0 0 30px rgba(37, 99, 235, 1)) drop-shadow(0 0 50px rgba(37, 99, 235, 0.6));
   box-shadow: 
     0 8px 30px rgba(37, 99, 235, 0.5),
@@ -1634,7 +1615,7 @@ body > * {
 }
 
 .service-card-purple:hover .service-icon {
-  transform: scale(1.2) rotate(8deg);
+  transform: scale(1.05);
   filter: drop-shadow(0 0 30px rgba(147, 51, 234, 1)) drop-shadow(0 0 50px rgba(147, 51, 234, 0.6));
   box-shadow: 
     0 8px 30px rgba(147, 51, 234, 0.5),
@@ -1649,7 +1630,7 @@ body > * {
 }
 
 .service-card-cyan:hover .service-icon {
-  transform: scale(1.2) rotate(8deg);
+  transform: scale(1.05);
   filter: drop-shadow(0 0 30px rgba(6, 182, 212, 1)) drop-shadow(0 0 50px rgba(6, 182, 212, 0.6));
   box-shadow: 
     0 8px 30px rgba(6, 182, 212, 0.5),
@@ -2669,12 +2650,12 @@ body > * {
 
 .portfolio-card {
   background: linear-gradient(135deg, rgba(30, 30, 50, 0.95), rgba(26, 38, 70, 0.95));
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border-radius: 1.5rem;
   padding: 2.5rem;
   border: 2px solid rgba(37, 99, 235, 0.3);
-  transition: var(--transition-smooth);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   overflow: hidden;
   image-rendering: -webkit-optimize-contrast;
@@ -2705,13 +2686,8 @@ body > * {
 }
 
 .portfolio-item:nth-child(1) .portfolio-card::before {
-  background: linear-gradient(90deg, 
-    var(--primary-blue),
-    var(--cyan),
-    var(--primary-blue)
-  );
-  background-size: 200% 100%;
-  animation: gradient-flow 3s ease infinite;
+  display: none;
+  animation: none;
 }
 
 .portfolio-item:nth-child(1) .portfolio-card::after {
@@ -2721,10 +2697,9 @@ body > * {
 .portfolio-item:nth-child(1) .portfolio-card:hover {
   border-color: rgba(37, 99, 235, 0.8);
   box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 80px rgba(37, 99, 235, 0.4),
-    0 0 120px rgba(6, 182, 212, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 15px 40px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
 }
 
 .portfolio-item:nth-child(1) .portfolio-icon {
@@ -2783,6 +2758,7 @@ body > * {
 .portfolio-item:nth-child(2) .portfolio-card::before,
 .portfolio-card.portfolio-manylovr::before {
   display: none;
+  animation: none;
 }
 
 .portfolio-item:nth-child(2) .portfolio-card::after,
@@ -2794,10 +2770,9 @@ body > * {
 .portfolio-card.portfolio-manylovr:hover {
   border-color: rgba(147, 51, 234, 0.8);
   box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 80px rgba(147, 51, 234, 0.4),
-    0 0 120px rgba(236, 72, 153, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 15px 40px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(147, 51, 234, 0.3);
+  transform: translateY(-2px);
 }
 
 .portfolio-item:nth-child(2) .portfolio-icon,
@@ -2873,15 +2848,8 @@ body > * {
 
 .portfolio-item:nth-child(3) .portfolio-card::before,
 .portfolio-card.portfolio-nltg::before {
-  background: linear-gradient(90deg, 
-    rgba(6, 182, 212, 0.8),
-    rgba(139, 92, 246, 0.8),
-    rgba(37, 99, 235, 0.8),
-    rgba(6, 182, 212, 0.8)
-  );
-  background-size: 300% 100%;
-  animation: gradient-flow 4s ease infinite;
-  opacity: 0.6;
+  display: none;
+  animation: none;
 }
 
 .portfolio-item:nth-child(3) .portfolio-card::after,
@@ -2899,23 +2867,19 @@ body > * {
     0 0 150px rgba(139, 92, 246, 0.4),
     0 0 200px rgba(37, 99, 235, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-2px);
 }
 
 .portfolio-item:nth-child(3) .portfolio-icon,
 .portfolio-card.portfolio-nltg .portfolio-icon {
-  filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.7)) 
-          drop-shadow(0 0 50px rgba(139, 92, 246, 0.5))
-          drop-shadow(0 0 75px rgba(37, 99, 235, 0.3));
-  animation: pulse-glow 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.5));
+  animation: none;
 }
 
 .portfolio-item:nth-child(3) .portfolio-card:hover .portfolio-icon,
 .portfolio-card.portfolio-nltg:hover .portfolio-icon {
-  filter: drop-shadow(0 0 40px rgba(6, 182, 212, 1)) 
-          drop-shadow(0 0 80px rgba(139, 92, 246, 0.8))
-          drop-shadow(0 0 120px rgba(37, 99, 235, 0.6));
-  transform: scale(1.15) rotate(5deg);
+  filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.6));
+  transform: none;
 }
 
 .portfolio-item:nth-child(3) .portfolio-tag,
@@ -2923,7 +2887,7 @@ body > * {
   background: rgba(6, 182, 212, 0.25);
   border-color: rgba(6, 182, 212, 0.5);
   color: #7dd3fc;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(2px);
 }
 
 .portfolio-item:nth-child(3) .portfolio-card:hover .portfolio-tag,
@@ -2965,15 +2929,8 @@ body > * {
 }
 
 .portfolio-card.portfolio-couscousbowl::before {
-  background: linear-gradient(90deg, 
-    rgba(37, 99, 235, 0.8),
-    rgba(6, 182, 212, 0.8),
-    rgba(59, 130, 246, 0.8),
-    rgba(37, 99, 235, 0.8)
-  );
-  background-size: 300% 100%;
-  animation: gradient-flow 4s ease infinite;
-  opacity: 0.6;
+  display: none;
+  animation: none;
 }
 
 .portfolio-card.portfolio-couscousbowl::after {
@@ -2984,33 +2941,26 @@ body > * {
 .portfolio-card.portfolio-couscousbowl:hover {
   border-color: rgba(37, 99, 235, 1);
   box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 100px rgba(37, 99, 235, 0.6),
-    0 0 150px rgba(6, 182, 212, 0.4),
-    0 0 200px rgba(59, 130, 246, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: translateY(-5px) scale(1.02);
+    0 15px 40px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(37, 99, 235, 0.4);
+  transform: translateY(-2px);
 }
 
 .portfolio-card.portfolio-couscousbowl .portfolio-icon {
-  filter: drop-shadow(0 0 25px rgba(37, 99, 235, 0.7)) 
-          drop-shadow(0 0 50px rgba(6, 182, 212, 0.5))
-          drop-shadow(0 0 75px rgba(59, 130, 246, 0.3));
-  animation: pulse-glow 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px rgba(37, 99, 235, 0.5));
+  animation: none;
 }
 
 .portfolio-card.portfolio-couscousbowl:hover .portfolio-icon {
-  filter: drop-shadow(0 0 40px rgba(37, 99, 235, 1)) 
-          drop-shadow(0 0 80px rgba(6, 182, 212, 0.8))
-          drop-shadow(0 0 120px rgba(59, 130, 246, 0.6));
-  transform: scale(1.15) rotate(5deg);
+  filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.6));
+  transform: none;
 }
 
 .portfolio-card.portfolio-couscousbowl .portfolio-tag {
   background: rgba(37, 99, 235, 0.25);
   border-color: rgba(37, 99, 235, 0.5);
   color: #93c5fd;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(2px);
 }
 
 .portfolio-card.portfolio-couscousbowl:hover .portfolio-tag {
@@ -3185,7 +3135,7 @@ body > * {
 }
 
 .portfolio-card:hover .portfolio-icon {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.05);
   filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.5));
 }
 
@@ -4647,7 +4597,7 @@ body > * {
 }
 
 .why-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-2px);
 }
 
 .why-card > * {
@@ -4931,7 +4881,7 @@ body > * {
 }
 
 .process-step:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-2px);
 }
 
 .process-step > * {
