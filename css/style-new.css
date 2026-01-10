@@ -351,12 +351,14 @@ a:hover {
    ======================================== */
 
 .hero {
-  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--spacing-3xl) 0;
+  padding-top: calc(var(--spacing-3xl) + 80px);
+  background: var(--bg-primary);
+  position: relative;
   overflow: hidden;
 }
 
