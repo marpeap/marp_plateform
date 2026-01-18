@@ -3,100 +3,622 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    
-    <title>Contact - Marpeap Digitals | Studio Web Rennes</title>
-    <meta name="title" content="Contact - Marpeap Digitals | Développeur Web Indépendant à Rennes">
-    <meta name="description" content="Démarrez votre projet digital. Contactez le studio Marpeap pour vos sites web, e-commerce et automatisations.">
-    <meta name="robots" content="index, follow">
-    
-    <link rel="icon" type="image/png" href="assets/images/favico.png">
+
+    <title>Contact Studio Digital Rennes - Agence Web | Création Site Web - Marpeap Digitals</title>
+    <meta name="description" content="Contactez le Studio Digital Rennes - Agence Web spécialisée en création site web professionnel. Devis gratuit, réponse sous 24h. Freelance expert React/Node.js.">
+    <meta name="keywords" content="studio digital rennes, agence web rennes, contact création site web, devis site internet, freelance react node js, développement web rennes, contact agence digitale, développeur freelance france">
+    <meta name="author" content="Adnan 'Marpeap' Najim">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
     <link rel="canonical" href="https://www.marpeap.digital/contact.html">
-    
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.marpeap.digital/contact.html">
+    <meta property="og:title" content="Contact Studio Digital Rennes - Agence Web | Création Site Web">
+    <meta property="og:description" content="Contactez le Studio Digital Rennes - Agence Web pour création site web professionnel. Devis gratuit, réponse sous 24h.">
+    <meta property="og:image" content="https://www.marpeap.digital/assets/images/marpeap-og.png">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Marpeap Digitals">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Marpeap Digitals - Contact - Développeur Web Freelance">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@MarpeapX">
+    <meta name="twitter:creator" content="@MarpeapX">
+    <meta name="twitter:title" content="Contact Studio Digital Rennes - Agence Web | Création Site Web">
+    <meta name="twitter:description" content="Contactez le Studio Digital Rennes - Agence Web pour création site web professionnel. Devis gratuit, réponse sous 24h.">
+    <meta name="twitter:image" content="https://www.marpeap.digital/assets/images/marpeap-og.png">
+
+    <!-- Métadonnées SEO avancées -->
+    <meta name="theme-color" content="#0A0F1C">
+    <meta name="msapplication-TileColor" content="#0A0F1C">
+    <meta name="application-name" content="Marpeap Digitals - Contact">
+
+    <!-- Icônes -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favico.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favico.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favico.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- Sitemap -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Préchargement des ressources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="css/style-new.css">
+
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            // Remplace par ta PUBLIC KEY EmailJS
-            emailjs.init("TA_CLE_PUBLIQUE_ICI");
-        })();
-    </script>
-
     <style>
-       /* Ajustements Formulaire Contact Studio */
-    .form-row-group {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-    }
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    @media (max-width: 768px) {
-        .form-row-group { grid-template-columns: 1fr; gap: 0; }
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0A0F1C 0%, #1a1f35 100%);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    /* --- LE FIX POUR LES SELECTS --- */
-    
-    /* 1. On donne le même look que les inputs textes */
-    .form-group input, 
-    .form-group textarea, 
-    .form-group select {
-        width: 100%;
-        padding: 1rem 1.25rem;
-        background: rgba(15, 23, 42, 0.6); /* Fond sombre transparent */
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 0.75rem;
-        color: #f3f4f6; /* Texte clair */
-        font-family: 'Inter', sans-serif;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        outline: none;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-    /* 2. On supprime le style par défaut du navigateur */
-    .form-group select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        cursor: pointer;
-        /* Ajout d'une flèche SVG personnalisée blanche/bleue */
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1.2em;
-        padding-right: 2.5rem; /* Espace pour la flèche */
-    }
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 15, 28, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-    /* 3. Style au Focus (Clic) - Effet Néon */
-    .form-group input:focus, 
-    .form-group textarea:focus, 
-    .form-group select:focus {
-        border-color: #3b82f6; /* Bleu Marpeap */
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-        background: rgba(15, 23, 42, 0.9);
-    }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    /* 4. Style des options déroulantes (Le menu qui s'ouvre) */
-    .form-group select option {
-        background-color: #0f172a; /* Fond très sombre (Dark Navy) */
-        color: white;
-        padding: 10px;
-    }
+        .nav-brand {
+            font-family: 'Montserrat', sans-serif;
+        }
 
-    /* Labels */
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: #94a3b8; /* Gris bleuté */
-        letter-spacing: 0.5px;
-    }
+        .brand-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #3b82f6;
+            display: block;
+        }
+
+        .brand-tagline {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #3b82f6;
+        }
+
+        .btn-primary-nav {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        /* Contact Hero */
+        .contact-hero {
+            padding: 10rem 0 5rem;
+            text-align: center;
+        }
+
+        .contact-hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .contact-hero-subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact-form-section {
+            padding: 3rem 0 5rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-info-card,
+        .contact-form-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .contact-info-title,
+        .contact-form-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .contact-info-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            flex-shrink: 0;
+        }
+
+        .contact-info-content h3 {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-info-content a,
+        .contact-info-content p {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .contact-info-content a:hover {
+            color: #3b82f6;
+        }
+
+        .contact-social {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-social h3 {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Form Styles */
+        .form-row-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-select-btn {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            color: #f3f4f6;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-select-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .form-select-value {
+            flex: 1;
+            opacity: 0.8;
+        }
+
+        .form-select-arrow {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Form Modals */
+        .form-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            backdrop-filter: blur(3px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .form-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .form-modal-content {
+            background: rgba(10, 15, 28, 0.98);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9) translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .form-modal.active .form-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .form-modal-header {
+            padding: 1.5rem 2rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-modal-title {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .form-modal-subtitle {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0;
+        }
+
+        .form-modal-body {
+            padding: 1.5rem 2rem;
+        }
+
+        .form-option {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .form-option:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .form-option.selected {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .form-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .form-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .form-message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .form-message.show {
+            display: block;
+        }
+
+        .form-message.success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .budget-container {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 15, 28, 0.95);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand p {
+            color: #94a3b8;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-column h4 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #3b82f6;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .contact-hero-title {
+                font-size: 2rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row-group {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content,
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -187,90 +709,79 @@
                     
                     <form id="contactForm" class="contact-form">
     
-    <input type="hidden" name="date" id="currentDate">
-    <input type="hidden" name="appointment_date" value="À définir">
-    <input type="hidden" name="appointment_time" value="-">
-    <input type="hidden" name="appointment_type" value="Prise de contact Web">
-    <input type="hidden" name="appointment_location" value="Visio / Téléphone">
-    <input type="hidden" name="appointment_coordinates" value="Remote">
+                        <input type="hidden" name="date" id="currentDate">
+                        <input type="hidden" name="appointment_date" value="À définir">
+                        <input type="hidden" name="appointment_time" value="-">
+                        <input type="hidden" name="appointment_type" value="Prise de contact Web">
+                        <input type="hidden" name="appointment_location" value="Visio / Téléphone">
+                        <input type="hidden" name="appointment_coordinates" value="Remote">
 
-    <div class="form-group" style="margin-bottom: 1.5rem;">
-        <label for="from_name">Nom complet *</label>
-        <input type="text" id="from_name" name="from_name" placeholder="Votre nom ou société" required>
-    </div>
+                        <div class="form-group">
+                            <label for="name">Nom complet *</label>
+                            <input type="text" id="name" name="name" placeholder="Votre nom ou société" required>
+                        </div>
 
-    <div class="form-row-group" style="margin-bottom: 1.5rem;">
-        <div class="form-group">
-            <label for="from_email">Email *</label>
-            <input type="email" id="from_email" name="from_email" placeholder="votre@email.com" required>
-        </div>
-        <div class="form-group">
-            <label for="phone">Téléphone</label>
-            <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78">
-        </div>
-    </div>
+                        <div class="form-row-group">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78">
+                            </div>
+                        </div>
 
-    <div class="form-row-group" style="margin-bottom: 1.5rem;">
-        <div class="form-group">
-            <label for="service">Service ou Pack *</label>
-<select id="service" name="service" required>
-    <option value="" disabled selected>Choisir une offre...</option>
-    
-    <option value="Pack M-ONE (290€)">🔹 Pack M-ONE (Site Vitrine)</option>
-    <option value="Pack M-SHOP (590€)">🔸 Pack M-SHOP (E-commerce)</option>
-    <option value="Pack M-LOCAL (190€)">📍 Pack M-LOCAL (Google Maps)</option>
-    
-    <option value="Pack M-APP (1 990€)">📱 Pack M-APP (App Mobile)</option>
-    <option value="Pack M-NEURAL (1 200€)">🧠 Pack M-NEURAL (IA & Auto)</option>
-    <option value="Pack M-SPEED (690€)">⚡ Pack M-SPEED (Performance)</option>
-    
-    <option value="Projet Sur-Mesure">🛠️ Développement Sur-Mesure</option>
-    <option value="Maintenance / SEO">🛡️ Maintenance ou SEO</option>
-</select>
-        </div>
-        <div class="form-group">
-            <label for="project_type">Type de projet</label>
-            <select id="project_type" name="project_type">
-                <option value="Création" selected>✨ Création (Nouveau)</option>
-                <option value="Refonte">🔄 Refonte (Existant)</option>
-                <option value="Audit/Conseil">📊 Audit & Conseil</option>
-            </select>
-        </div>
-    </div>
+                        <div class="form-row-group">
+                            <div class="form-group">
+                                <label for="service">Service ou Pack *</label>
+                                <input type="hidden" id="service" name="service" required>
+                                <button type="button" class="form-select-btn" data-modal="service-modal">
+                                    <span class="form-select-value" id="service-value">Choisir une offre...</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label for="project_type">Type de projet</label>
+                                <input type="hidden" id="project_type" name="project_type" value="Création">
+                                <button type="button" class="form-select-btn" data-modal="project-modal">
+                                    <span class="form-select-value" id="project-value">✨ Création (Nouveau)</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                            </div>
+                        </div>
 
-    <div class="form-row-group" style="margin-bottom: 1.5rem;">
-        <div class="form-group">
-            <label for="budget">Budget Estimé</label>
-            <select id="budget" name="budget">
-                <option value="Non défini" selected>Je ne sais pas</option>
-                <option value="< 500€">Moins de 500€ (Packs)</option>
-                <option value="500€ - 1500€">500€ - 1500€</option>
-                <option value="1500€ - 5000€">1500€ - 5000€</option>
-                <option value="+ 5000€">Plus de 5000€</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="timeline">Délai souhaité</label>
-            <select id="timeline" name="timeline">
-                <option value="Flexible" selected>Flexible</option>
-                <option value="Urgent (< 1 semaine)">🔥 Urgent (< 1 semaine)</option>
-                <option value="1 mois">Dans le mois</option>
-            </select>
-        </div>
-    </div>
+                        <div class="form-row-group budget-container">
+                            <div class="form-group">
+                                <label for="budget">Budget Estimé</label>
+                                <input type="hidden" id="budget" name="budget" value="Non défini">
+                                <button type="button" class="form-select-btn" data-modal="budget-modal">
+                                    <span class="form-select-value" id="budget-value">Je ne sais pas</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeline">Délai souhaité</label>
+                                <input type="hidden" id="timeline" name="timeline" value="Flexible">
+                                <button type="button" class="form-select-btn" data-modal="timeline-modal">
+                                    <span class="form-select-value" id="timeline-value">Flexible</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                            </div>
+                        </div>
 
-    <div class="form-group" style="margin-bottom: 2rem;">
-        <label for="message">Message *</label>
-        <textarea id="message" name="message" rows="5" placeholder="Détaillez votre besoin..." required></textarea>
-    </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Détaillez votre besoin..." required></textarea>
+                        </div>
 
-    <div class="form-message" id="formMessage"></div>
+                        <div class="form-message" id="formMessage"></div>
 
-    <button type="submit" class="btn-primary btn-submit" id="submitBtn" style="width: 100%; justify-content: center;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        <span>Envoyer la demande</span>
-    </button>
-</form>
+                        <button type="submit" class="btn-primary btn-submit" id="submitBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            <span>Envoyer la demande</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -304,21 +815,227 @@
         </div>
     </footer>
 
-    <script src="js/main-new.js"></script>
+    <!-- Modales du formulaire -->
+    <div id="service-modal" class="form-modal">
+        <div class="form-modal-content">
+            <button class="form-modal-close" aria-label="Fermer">&times;</button>
+            <div class="form-modal-header">
+                <h2 class="form-modal-title">Service ou Pack</h2>
+                <p class="form-modal-subtitle">Choisissez l'offre qui correspond à votre projet</p>
+            </div>
+            <div class="form-modal-body">
+                <button class="form-option" data-value="Pack M-ONE™ (290€)">🔹 M-ONE™ - Carte de Visite Digitale (290€)</button>
+                <button class="form-option" data-value="Pack M-LOCAL™ (190€)">📍 M-LOCAL™ - Visibilité Google Maps (190€)</button>
+                <button class="form-option" data-value="Pack M-SHOP LITE™ (590€)">🔸 M-SHOP LITE™ - E-Commerce Start (590€)</button>
+                <button class="form-option" data-value="Pack M-CORP™ (820€)">🏛️ M-CORP™ - Équipe IA Autonome (820€)</button>
+                <button class="form-option" data-value="Pack M-NEURAL™ (180€)">🧠 M-NEURAL™ - Chatbot IA Spécialisé (180€)</button>
+                <button class="form-option" data-value="Pack M-APP™ (1 990€)">📱 M-APP™ - Application Mobile PWA (1 990€)</button>
+                <button class="form-option" data-value="Pack M-SPEED™ (260€)">⚡ M-SPEED™ - Audit & Optimisation (260€)</button>
+                <button class="form-option" data-value="M-CARE MINI (39€/mois)">🛡️ M-CARE MINI - Maintenance & Hébergement (39€/mois)</button>
+                <button class="form-option" data-value="M-SEO STARTER (89€/mois)">🚀 M-SEO STARTER - Croissance & Positionnement (89€/mois)</button>
+                <button class="form-option" data-value="Projet Sur-Mesure">🛠️ Développement Sur-Mesure</button>
+                <button class="form-option" data-value="Consultation Gratuite">💬 Consultation Gratuite (15 min)</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="project-modal" class="form-modal">
+        <div class="form-modal-content">
+            <button class="form-modal-close" aria-label="Fermer">&times;</button>
+            <div class="form-modal-header">
+                <h2 class="form-modal-title">Type de projet</h2>
+                <p class="form-modal-subtitle">Quel est l'objectif de votre projet ?</p>
+            </div>
+            <div class="form-modal-body">
+                <button class="form-option selected" data-value="Création">✨ Création (Nouveau projet)</button>
+                <button class="form-option" data-value="Refonte">🔄 Refonte (Site existant)</button>
+                <button class="form-option" data-value="Audit/Conseil">📊 Audit & Conseil</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="budget-modal" class="form-modal">
+        <div class="form-modal-content">
+            <button class="form-modal-close" aria-label="Fermer">&times;</button>
+            <div class="form-modal-header">
+                <h2 class="form-modal-title">Budget Estimé</h2>
+                <p class="form-modal-subtitle">Quelle est votre fourchette budgétaire ?</p>
+            </div>
+            <div class="form-modal-body">
+                <button class="form-option selected" data-value="Non défini">🤔 Je ne sais pas</button>
+                <button class="form-option" data-value="< 500€">💰 Moins de 500€ (Packs)</button>
+                <button class="form-option" data-value="500€ - 1500€">💎 500€ - 1500€</button>
+                <button class="form-option" data-value="1500€ - 5000€">🏆 1500€ - 5000€</button>
+                <button class="form-option" data-value="+ 5000€">🚀 Plus de 5000€</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="timeline-modal" class="form-modal">
+        <div class="form-modal-content">
+            <button class="form-modal-close" aria-label="Fermer">&times;</button>
+            <div class="form-modal-header">
+                <h2 class="form-modal-title">Délai souhaité</h2>
+                <p class="form-modal-subtitle">Quand souhaitez-vous commencer votre projet ?</p>
+            </div>
+            <div class="form-modal-body">
+                <button class="form-option selected" data-value="Flexible">🕐 Flexible</button>
+                <button class="form-option" data-value="Urgent (< 1 semaine)">🔥 Urgent (< 1 semaine)</button>
+                <button class="form-option" data-value="1 mois">📅 Dans le mois</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts externes -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
+        // Initialisation AOS
         AOS.init({ duration: 800, once: true });
 
-        // Script Spécifique pour gérer l'envoi EmailJS et la date
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. Remplir la date cachée automatiquement
-            const dateInput = document.getElementById('currentDate');
-            if(dateInput) {
-                const now = new Date();
-                dateInput.value = now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR');
+            console.log('DOM Chargé - Initialisation...');
+            
+            // === CONFIGURATION EMAILJS ===
+            // Initialisation avec votre clé publique (nouvelle syntaxe EmailJS v4)
+            (function() {
+                emailjs.init({
+                    publicKey: 'FDKh_5nUofVZbjniz'  // REMPLACEZ par votre vraie Public Key
+                });
+            })();
+
+            // Configuration des IDs EmailJS (VOS VRAIS IDENTIFIANTS)
+            const EMAILJS_CONFIG = {
+                SERVICE_ID: 'service_gvyrpik',
+                TEMPLATE_ID: 'template_k5lgn2g'
+            };
+
+            console.log('Configuration EmailJS chargée:', EMAILJS_CONFIG);
+            function initFormModals() {
+                // Ouvrir les modales
+                document.querySelectorAll('.form-select-btn').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const modalId = this.getAttribute('data-modal');
+                        const modal = document.getElementById(modalId);
+                        if (modal) {
+                            modal.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    });
+                });
+
+                // Fermer avec le bouton X
+                document.querySelectorAll('.form-modal-close').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const modal = this.closest('.form-modal');
+                        modal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+
+                // Fermer en cliquant sur l'arrière-plan
+                document.querySelectorAll('.form-modal').forEach(modal => {
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            this.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                });
+
+                // Sélectionner une option
+                document.querySelectorAll('.form-option').forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const modal = this.closest('.form-modal');
+                        const modalId = modal.id;
+                        const value = this.getAttribute('data-value');
+                        const text = this.textContent;
+
+                        // Retirer la sélection des autres options
+                        modal.querySelectorAll('.form-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+
+                        // Sélectionner cette option
+                        this.classList.add('selected');
+
+                        // Mettre à jour le champ caché et l'affichage
+                        const fieldName = modalId.replace('-modal', '');
+                        const hiddenInput = document.getElementById(fieldName);
+                        const displayValue = document.getElementById(fieldName + '-value');
+
+                        if (hiddenInput) {
+                            hiddenInput.value = value;
+                        }
+                        if (displayValue) {
+                            displayValue.textContent = text;
+                        }
+
+                        // Fermer la modale
+                        modal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+
+                        // Gérer l'affichage du champ budget
+                        if (fieldName === 'service') {
+                            setTimeout(toggleBudgetField, 10);
+                        }
+                    });
+                });
+
+                // Fermer avec Échap
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        document.querySelectorAll('.form-modal.active').forEach(modal => {
+                            modal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        });
+                    }
+                });
             }
 
-            // 2. Gestionnaire d'envoi du formulaire
+            // Afficher/masquer le champ budget selon le service sélectionné
+            function toggleBudgetField() {
+                const serviceInput = document.getElementById('service');
+                const budgetContainer = document.querySelector('.budget-container');
+
+                if (serviceInput && budgetContainer) {
+                    const selectedValue = serviceInput.value;
+                    
+                    if (selectedValue === 'Projet Sur-Mesure') {
+                        budgetContainer.style.display = 'grid';
+                    } else {
+                        budgetContainer.style.display = 'none';
+                        
+                        // Reset budget
+                        const budgetInput = document.getElementById('budget');
+                        const budgetValue = document.getElementById('budget-value');
+                        if (budgetInput) budgetInput.value = 'Non défini';
+                        if (budgetValue) budgetValue.textContent = 'Je ne sais pas';
+                        
+                        document.querySelectorAll('#budget-modal .form-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        document.querySelector('#budget-modal .form-option[data-value="Non défini"]')?.classList.add('selected');
+                    }
+                }
+            }
+
+            // === VALIDATION DU FORMULAIRE ===
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function validatePhone(phone) {
+                if (!phone) return true; // Téléphone optionnel
+                const re = /^(\+33|0)[1-9](\d{2}){4}$/;
+                return re.test(phone.replace(/\s/g, ''));
+            }
+
+            // === GESTION DU FORMULAIRE ===
             const form = document.getElementById('contactForm');
             const btn = document.getElementById('submitBtn');
             const msgBox = document.getElementById('formMessage');
@@ -327,31 +1044,117 @@
                 form.addEventListener('submit', function(event) {
                     event.preventDefault();
                     
+                    // Validation basique
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const message = document.getElementById('message').value.trim();
+
+                    // Validation
+                    let isValid = true;
+                    
+                    if (!name) {
+                        isValid = false;
+                        alert('Veuillez entrer votre nom');
+                        return;
+                    }
+
+                    if (!validateEmail(email)) {
+                        isValid = false;
+                        alert('Veuillez entrer un email valide');
+                        return;
+                    }
+
+                    if (phone && !validatePhone(phone)) {
+                        isValid = false;
+                        alert('Veuillez entrer un numéro de téléphone valide');
+                        return;
+                    }
+
+                    if (!message) {
+                        isValid = false;
+                        alert('Veuillez entrer un message');
+                        return;
+                    }
+
+                    if (!isValid) return;
+
                     // État "Envoi en cours..."
                     const originalBtnText = btn.innerHTML;
-                    btn.innerHTML = 'Envoi en cours...';
+                    btn.innerHTML = '<span>⏳ Envoi en cours...</span>';
                     btn.disabled = true;
 
-                    // Envoi via EmailJS
-                    // NOTE: Remplace 'SERVICE_ID' et 'TEMPLATE_ID' par tes vrais IDs EmailJS
-                    emailjs.sendForm('ton_service_id', 'ton_template_id', this)
-                        .then(function() {
-                            // Succès
-                            msgBox.innerHTML = 'Message envoyé avec succès ! Je vous recontacte très vite.';
+                    // Vérifier que EmailJS est chargé
+                    if (typeof emailjs === 'undefined') {
+                        console.error('EmailJS n\'est pas chargé');
+                        msgBox.innerHTML = '⚠️ Erreur de configuration. Veuillez contacter directement par email.';
+                        msgBox.className = 'form-message error show';
+                        btn.innerHTML = originalBtnText;
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    console.log('Envoi du formulaire avec EmailJS...');
+
+                    // Envoi via EmailJS avec la configuration qui fonctionne
+                    emailjs.sendForm(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, this)
+                        .then(function(response) {
+                            console.log('✅ Succès!', response.status, response.text);
+                            msgBox.innerHTML = '✅ Message envoyé avec succès ! Je vous recontacterai très rapidement.';
                             msgBox.className = 'form-message success show';
                             form.reset();
                             btn.innerHTML = originalBtnText;
                             btn.disabled = false;
+                            
+                            // Réinitialiser les valeurs affichées des modales si elles existent
+                            const serviceValue = document.getElementById('service-value');
+                            const projectValue = document.getElementById('project-value');
+                            const budgetValue = document.getElementById('budget-value');
+                            const timelineValue = document.getElementById('timeline-value');
+                            
+                            if (serviceValue) serviceValue.textContent = 'Choisir une offre...';
+                            if (projectValue) projectValue.textContent = '✨ Création (Nouveau)';
+                            if (budgetValue) budgetValue.textContent = 'Je ne sais pas';
+                            if (timelineValue) timelineValue.textContent = 'Flexible';
+                            
+                            // Masquer le message après 5 secondes
+                            setTimeout(() => {
+                                msgBox.classList.remove('show');
+                            }, 5000);
                         }, function(error) {
-                            // Erreur
-                            console.error('Erreur EmailJS:', error);
-                            msgBox.innerHTML = 'Une erreur est survenue. Appelez le Studio au 02 30 96 40 30.';
+                            console.error('❌ Erreur EmailJS:', error);
+                            console.error('Code:', error.status);
+                            console.error('Message:', error.text);
+                            
+                            let errorMsg = '❌ Une erreur est survenue lors de l\'envoi. ';
+                            
+                            if (error.text) {
+                                if (error.text.includes('Invalid') || error.text.includes('public_key')) {
+                                    errorMsg += 'Configuration EmailJS incorrecte.';
+                                } else if (error.text.includes('template')) {
+                                    errorMsg += 'Template EmailJS introuvable.';
+                                } else if (error.text.includes('service')) {
+                                    errorMsg += 'Service EmailJS introuvable.';
+                                } else {
+                                    errorMsg += 'Veuillez réessayer ou me contacter directement.';
+                                }
+                            } else {
+                                errorMsg += 'Veuillez réessayer ou me contacter directement par email.';
+                            }
+                            
+                            msgBox.innerHTML = errorMsg;
                             msgBox.className = 'form-message error show';
                             btn.innerHTML = originalBtnText;
                             btn.disabled = false;
                         });
                 });
             }
+
+            // Initialiser tout
+            initFormModals();
+            toggleBudgetField();
+
+            console.log('✅ Initialisation terminée');
         });
     </script>
 </body>

@@ -1,102 +1,196 @@
-# MARPEAP DIGITALS - Apache Configuration
-# Performance & Security Optimizations
+# .htaccess optimisé pour SEO et performances
+# Marpeap Digitals - www.marpeap.digital
 
-# Enable Rewrite Engine
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    
-    # Force HTTPS
-    RewriteCond %{HTTPS} off
-    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-    
-    # Force WWW (or non-WWW - choose one)
-    # RewriteCond %{HTTP_HOST} !^www\. [NC]
-    # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
-</IfModule>
+# ========================================
+# SÉCURITÉ ET ACCÈS
+# ========================================
 
-# Compression
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml
-</IfModule>
-
-# Browser Caching
-<IfModule mod_expires.c>
-    ExpiresActive On
-    
-    # Images
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/gif "access plus 1 year"
-    ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-    ExpiresByType image/x-icon "access plus 1 year"
-    
-    # CSS and JavaScript
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType text/javascript "access plus 1 month"
-    
-    # Fonts
-    ExpiresByType font/woff "access plus 1 year"
-    ExpiresByType font/woff2 "access plus 1 year"
-    ExpiresByType application/font-woff "access plus 1 year"
-    ExpiresByType application/font-woff2 "access plus 1 year"
-    
-    # HTML
-    ExpiresByType text/html "access plus 0 seconds"
-</IfModule>
-
-# Security Headers
-<IfModule mod_headers.c>
-    # X-Frame-Options
-    Header always set X-Frame-Options "SAMEORIGIN"
-    
-    # X-Content-Type-Options
-    Header always set X-Content-Type-Options "nosniff"
-    
-    # X-XSS-Protection
-    Header always set X-XSS-Protection "1; mode=block"
-    
-    # Referrer-Policy
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    
-    # Permissions-Policy
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-    
-    # Remove Server Signature
-    Header unset Server
-    Header unset X-Powered-By
-</IfModule>
-
-# Disable Directory Browsing
-Options -Indexes
-
-# Custom Error Pages
-ErrorDocument 404 /404.html
-ErrorDocument 500 /500.html
-
-# Protect sensitive files
-<FilesMatch "^\.">
-    Order allow,deny
+# Bloquer l'accès aux fichiers sensibles
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|conf)$">
+    Order Allow,Deny
     Deny from all
 </FilesMatch>
 
-# Allow access to .well-known (for SSL certificates)
+# Bloquer l'accès aux dossiers sensibles
+RedirectMatch 404 /\.git
+RedirectMatch 404 /node_modules
+RedirectMatch 404 /_archived
+
+# Protéger les fichiers de configuration
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# ========================================
+# COMPRESSION GZIP
+# ========================================
+
+<IfModule mod_deflate.c>
+    # Compression des fichiers texte
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/ld+json
+
+    # Compression des polices
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/woff
+    AddOutputFilterByType DEFLATE font/woff2
+
+    # Niveau de compression
+    DeflateCompressionLevel 9
+
+    # Exclure les navigateurs anciens
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# ========================================
+# CACHE BROWSER
+# ========================================
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Cache HTML (faible car contenu dynamique)
+    ExpiresByType text/html "access plus 1 hour"
+
+    # Cache CSS et JS (élevé car statiques)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+
+    # Cache Images (très élevé)
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/ico "access plus 1 year"
+
+    # Cache Polices (très élevé)
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+
+    # Cache fichiers statiques
+    ExpiresByType application/pdf "access plus 1 year"
+    ExpiresByType text/xml "access plus 1 year"
+
+    # Cache par défaut
+    ExpiresDefault "access plus 1 month"
+</IfModule>
+
+# ========================================
+# CACHE CONTRÔLE HTTP
+# ========================================
+
+<IfModule mod_headers.c>
+    # Cache-Control pour les fichiers statiques
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|otf|pdf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Cache-Control pour HTML (plus court)
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </FilesMatch>
+
+    # Headers de sécurité
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options SAMEORIGIN
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Compression
+    Header append Vary Accept-Encoding
+</IfModule>
+
+# ========================================
+# REDIRECTIONS SEO
+# ========================================
+
+# Redirection HTTP vers HTTPS (si activé)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Suppression des trailing slashes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [R=301,L]
+
+# Redirections spécifiques si nécessaire
+# Redirect 301 /ancienne-page.html /nouvelle-page.html
+
+# ========================================
+# OPTIMISATIONS PERFORMANCES
+# ========================================
+
+# Activer Keep-Alive
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# Optimiser les connexions
+<IfModule mod_setenvif.c>
+    SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+    RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+</IfModule>
+
+# ========================================
+# RÈGLES DE RÉÉCRITURE URL
+# ========================================
+
 <IfModule mod_rewrite.c>
-    RewriteRule ^\.well-known/ - [L]
+    RewriteEngine On
+
+    # Règles SEO-friendly (optionnel)
+    # RewriteRule ^services$ services.html [L]
+    # RewriteRule ^contact$ contact.html [L]
+
+    # Redirection des URLs non-www vers www
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
+    RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Gestion des erreurs 404
+    ErrorDocument 404 /404.html
+    ErrorDocument 500 /404.html
 </IfModule>
 
-# UTF-8 Encoding
-AddDefaultCharset UTF-8
-AddCharset UTF-8 .html .css .js .xml .json .rss .atom
+# ========================================
+# CONFIGURATION PHP (si nécessaire)
+# ========================================
 
-# MIME Types
-<IfModule mod_mime.c>
-    AddType application/javascript js
-    AddType text/css css
-    AddType image/svg+xml svg svgz
-    AddType application/font-woff woff
-    AddType application/font-woff2 woff2
-    AddType image/webp webp
-</IfModule>
+# <IfModule mod_php.c>
+#     php_value upload_max_filesize 10M
+#     php_value post_max_size 10M
+#     php_value memory_limit 256M
+#     php_value max_execution_time 300
+# </IfModule>
+
+# ========================================
+# LOGGING ET MONITORING
+# ========================================
+
+# Logs personnalisés (optionnel)
+# CustomLog /dev/null combined
+# ErrorLog /dev/null
+
+# ========================================
+# FIN DE CONFIGURATION
+# ========================================
+
+# Test de configuration
+# Pour tester : curl -I https://www.marpeap.digital/

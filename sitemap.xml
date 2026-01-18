@@ -27,6 +27,21 @@
     </image:image>
   </url>
   
+  <!-- Page Packs/Tarifs -->
+  <url>
+    <loc>https://www.marpeap.digital/packs.html</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.marpeap.digital/packs.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.marpeap.digital/packs.html"/>
+    <image:image>
+      <image:loc>https://www.marpeap.digital/assets/images/marpeap.png</image:loc>
+      <image:title>Marpeap Digitals - Packs Web</image:title>
+      <image:caption>Packs web complets : site vitrine, e-commerce, IA - Marpeap Digitals</image:caption>
+    </image:image>
+  </url>
+
   <!-- Page Contact -->
   <url>
     <loc>https://www.marpeap.digital/contact.html</loc>

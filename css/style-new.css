@@ -66,18 +66,34 @@
 }
 
 /* ========================================
-   RESET & BASE STYLES
+   CORE WEB VITALS OPTIMIZATIONS
    ======================================== */
 
+/* Prévention du Cumulative Layout Shift (CLS) */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Réservation d'espace pour les images et contenus */
+img {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Optimisation du rendu des polices */
+@font-face {
+  font-display: swap;
+}
+
+/* Optimisation du scroll et du rendu */
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -88,7 +104,35 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prévention du flash de contenu non stylisé */
+  font-display: swap;
 }
+
+/* Optimisation des animations pour les Core Web Vitals */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+}
+
+/* Optimisation des images pour le LCP */
+.hero img,
+.portfolio img,
+.service img {
+  loading: eager;
+  decoding: async;
+}
+
+.content img {
+  loading: lazy;
+  decoding: async;
+}
+
+/* ========================================
+   RESET & BASE STYLES
+   ======================================== */
 
 ::selection {
   background-color: var(--brand-blue);
