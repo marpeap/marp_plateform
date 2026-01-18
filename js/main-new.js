@@ -1,6 +1,6 @@
 /**
  * MARPEAP DIGITALS - MAIN JAVASCRIPT
- * @author Adnan "Marpeap" Najim
+ * @author Marpeap Digitals
  * @version 2025.1.0
  */
 
@@ -393,6 +393,6 @@
   console.log('%c🚀 MARPEAP DIGITALS', 'font-size: 24px; font-weight: bold; color: #3B82F6;');
   console.log('%cCode. Growth. Results.', 'font-size: 14px; color: #06B6D4;');
   console.log('%cWebsite loaded successfully!', 'font-size: 12px; color: #10B981;');
-  console.log('%cContact: adnan.najim@pm.me | +33 6 49 71 03 70', 'font-size: 10px; color: #9CA3AF;');
+  console.log('%cContact: contact@marpeap.digital | +33 2 30 96 40 30', 'font-size: 10px; color: #9CA3AF;');
 
 })();

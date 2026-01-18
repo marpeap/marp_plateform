@@ -94,4 +94,4 @@ Pour toute question : contact@marpeap.digital
 
 ---
 
-Développé avec ❤️ par Adnan "Marpeap" Najim
+Développé avec ❤️ par Marpeap Digitals

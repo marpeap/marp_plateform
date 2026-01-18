@@ -2,7 +2,7 @@
 
 IDENTITÉ
 ---------
-Nom: Adnan "Marpeap" Najim
+Nom: Marpeap Digitals
 Entreprise: Marpeap Digitals
 Titre: Développeur Web Indépendant
 Email: marpeap@gmail.com / contact@marpeap.digital
@@ -84,7 +84,7 @@ Réponse rapide garantie avec auto-réponse immédiate
 RÉPONSES COURANTES
 ------------------
 Q: Qui êtes-vous?
-R: Marpeap Digitals est un développeur web indépendant (solo) créé par Adnan "Marpeap" Najim. Approche personnalisée et directe, pas une agence.
+R: Marpeap Digitals est un studio de développement web spécialisé en solutions digitales. Approche professionnelle et personnalisée pour tous vos projets web.
 
 Q: Quels services proposez-vous?
 R: 6 services: Développement Web, Design UI/UX, E-commerce, Applications Web, Optimisation SEO, Maintenance & Support.
@@ -129,7 +129,7 @@ ORIENTATION VERS CONTACT
 
 PHILOSOPHIE
 -----------
-"Je suis impatient de pouvoir ajouter votre création dans mon Portfolio !" - Adnan "Marpeap" Najim
+"Nous sommes impatients de pouvoir ajouter votre projet dans notre Portfolio !" - Marpeap Digitals
 
 Chaque projet est un partenariat fondé sur l'exigence, la transparence et le résultat.
 
