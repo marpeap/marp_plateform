@@ -162,6 +162,157 @@
             padding-top: 4rem;
             margin-top: 4rem;
         }
+
+        /* Boutons Info */
+        .btn-info {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .btn-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Modales */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: rgba(10, 15, 28, 0.95);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            max-height: 80vh;
+            width: 90%;
+            padding: 2rem;
+            position: relative;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-section p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .modal-benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-benefits li {
+            color: #cbd5e1;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .modal-benefits li::before {
+            content: '✨';
+            color: #10b981;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
@@ -209,6 +360,7 @@
             <div class="pricing-grid">
                 
                 <div class="pricing-card blue" data-aos="fade-up" data-aos-delay="100">
+                    <button class="btn-info" data-modal="modal-mone" aria-label="Plus d'informations sur M-ONE™">🔍</button>
                     <h3 class="price-title">M-ONE™</h3>
                     <p class="price-subtitle">Carte de Visite Digitale</p>
                     <div class="price-amount">290€</div>
@@ -224,6 +376,7 @@
 
                 <div class="pricing-card orange" data-aos="fade-up" data-aos-delay="200">
                     <div class="popular-badge">POPULAIRE</div>
+                    <button class="btn-info" data-modal="modal-mshop" aria-label="Plus d'informations sur M-SHOP LITE™">🔍</button>
                     <h3 class="price-title">M-SHOP LITE™</h3>
                     <p class="price-subtitle">E-Commerce Start</p>
                     <div class="price-amount">590€</div>
@@ -238,6 +391,7 @@
                 </div>
 
                 <div class="pricing-card green" data-aos="fade-up" data-aos-delay="300">
+                    <button class="btn-info" data-modal="modal-mlocal" aria-label="Plus d'informations sur M-LOCAL™">🔍</button>
                     <h3 class="price-title">M-LOCAL™</h3>
                     <p class="price-subtitle">Visibilité Google Maps</p>
                     <div class="price-amount">190€</div>
@@ -262,6 +416,7 @@
                 
                 <div class="pricing-card" style="border-top: 4px solid #facc15; background: linear-gradient(180deg, rgba(250, 204, 21, 0.05) 0%, rgba(30, 30, 50, 0.6) 100%);">
                     <div class="popular-badge" style="background: #facc15; color: black;">ULTIMATE</div>
+                    <button class="btn-info" data-modal="modal-mcorp" aria-label="Plus d'informations sur M-CORP™">🔍</button>
                     <h3 class="price-title" style="color: #facc15;">M-CORP™</h3>
                     <p class="price-subtitle">Force de Travail Autonome (Multi-Agents)</p>
                     <div style="margin-bottom: 1.5rem;">
@@ -280,6 +435,7 @@
 
                 <div class="pricing-card" style="border-top: 4px solid #8b5cf6; background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(30, 30, 50, 0.6) 100%);">
                     <div class="popular-badge" style="background: #8b5cf6; color: white;">INNOVATION</div>
+                    <button class="btn-info" data-modal="modal-mneural" aria-label="Plus d'informations sur M-NEURAL™">🔍</button>
                     <h3 class="price-title">M-NEURAL™</h3>
                     <p class="price-subtitle">Automatisation & Chatbot IA</p>
                     <div class="price-amount">390€</div>
@@ -294,6 +450,7 @@
                 </div>
 
                 <div class="pricing-card" style="border-top: 4px solid #ef4444;">
+                    <button class="btn-info" data-modal="modal-mspeed" aria-label="Plus d'informations sur M-SPEED™">🔍</button>
                     <h3 class="price-title">M-SPEED™</h3>
                     <p class="price-subtitle">Audit & Optimisation Vitesse</p>
                     <div class="price-amount">260€</div>
@@ -309,6 +466,7 @@
 
                 <div class="pricing-card" style="border-top: 4px solid #06b6d4; background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, rgba(30, 30, 50, 0.6) 100%);">
                     <div class="popular-badge" style="background: #06b6d4; color: white; right: -35px; top: 20px;">MOBILE</div>
+                    <button class="btn-info" data-modal="modal-mapp" aria-label="Plus d'informations sur M-APP™">🔍</button>
                     <h3 class="price-title">M-APP™</h3>
                     <p class="price-subtitle">Application Mobile Hybride / PWA</p>
                     <div class="price-amount">1 990€</div>
@@ -331,6 +489,7 @@
 
                 <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 900px; margin: 0 auto; gap: 2rem;">
                     <div class="pricing-card" style="border-top: 4px solid #8b5cf6;">
+                        <button class="btn-info" data-modal="modal-mcare" aria-label="Plus d'informations sur M-CARE MINI">🔍</button>
                         <h3 class="price-title">M-CARE MINI</h3>
                         <div class="price-amount" style="font-size: 2.5rem; margin-bottom: 1rem;">39€<span>/mois</span></div>
                         <p class="price-subtitle">Maintenance & Hébergement</p>
@@ -343,6 +502,7 @@
                     </div>
 
                     <div class="pricing-card" style="border-top: 4px solid #ec4899;">
+                        <button class="btn-info" data-modal="modal-mseo" aria-label="Plus d'informations sur M-SEO STARTER">🔍</button>
                         <h3 class="price-title">M-SEO STARTER</h3>
                         <div class="price-amount" style="font-size: 2.5rem; margin-bottom: 1rem;">89€<span>/mois</span></div>
                         <p class="price-subtitle">Croissance & Positionnement</p>
@@ -405,6 +565,210 @@
         </div>
     </footer>
 
+    <!-- Modales de détails -->
+    <div id="modal-mone" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-ONE™ — Carte de Visite Digitale</h2>
+                <p class="modal-subtitle">🌐 SOLUTIONS DE VISIBILITÉ ET SITE WEB</p>
+                <div class="modal-price">290€</div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>Basé sur une structure "One-Page" ultra-optimisée. Après un bref entretien sur votre activité, nous concevons un design unique qui va droit au but. Pas de menus complexes, juste l'essentiel pour convertir.</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Crédibilité instantanée : Vous n'êtes plus "l'artisan sans site", vous avez une vitrine de standing.</li>
+                    <li>Zéro stress : L'hébergement est géré par nos soins.</li>
+                    <li>Vitesse : Livré en 72h, c'est l'offre la plus rapide du marché pour un rendu "Studio".</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mlocal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-LOCAL™ — Visibilité Google Maps</h2>
+                <p class="modal-subtitle">🌐 SOLUTIONS DE VISIBILITÉ ET SITE WEB</p>
+                <div class="modal-price">190€</div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>Nous effectuons un audit de votre fiche Google Business existante (ou nous la créons). Nous injectons les mots-clés que vos clients tapent réellement à Rennes et alentours.</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Appels directs : Apparaître dans le "Pack Local" de Google multiplie par 3 le nombre d'appels.</li>
+                    <li>Preuve sociale : Le système de QR Code facilite la récolte d'avis positifs, ce qui rassure les nouveaux clients.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mshop" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-SHOP LITE™ — E-Commerce Start</h2>
+                <p class="modal-subtitle">🌐 SOLUTIONS DE VISIBILITÉ ET SITE WEB</p>
+                <div class="modal-price">590€</div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>Nous configurons une boutique Shopify ou WooCommerce prête à l'emploi. Nous intégrons vos 20 premiers produits et paramétrons les passerelles de paiement (Stripe/PayPal).</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Autonomie : Avec le tuto vidéo fourni, vous gérez vos stocks et vos commandes seul, sans payer une agence à chaque modification.</li>
+                    <li>Professionnalisme : Un parcours d'achat fluide qui limite l'abandon de panier.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mcorp" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-CORP™ — Équipe IA Autonome</h2>
+                <p class="modal-subtitle">🧠 SOLUTIONS TECHNIQUES & INTELLIGENCE ARTIFICIELLE</p>
+                <div class="modal-price">820€ <span style="text-decoration: line-through; color: #64748b; font-size: 1.2rem;">(Promo)</span></div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>C'est le pack "The Org". Nous installons 3 instances d'agents IA (via OpenRouter) qui communiquent entre elles. L'agent "Marketing" peut demander à l'agent "Analyste" des données pour rédiger un post LinkedIn.</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Réduction massive de la charge de travail : L'IA gère la prospection et le contenu pendant que vous vous vous concentrez sur vos chantiers ou vos clients.</li>
+                    <li>Innovation : Vous possédez une technologie que 99% de vos concurrents n'ont pas encore découverte.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mneural" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-NEURAL™ — Chatbot IA Spécialisé</h2>
+                <p class="modal-subtitle">🧠 SOLUTIONS TECHNIQUES & INTELLIGENCE ARTIFICIELLE</p>
+                <div class="modal-price">390€</div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>Nous ingérons vos documents (tarifs, FAQ, plaquettes) dans un modèle GPT-4. Le chatbot devient un expert de votre entreprise capable de répondre précisément aux prospects sur votre site.</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Support 24h/24 : Vous répondez aux clients même à 3h du matin.</li>
+                    <li>Capture de leads : Le bot qualifie les demandes et vous envoie les coordonnées des prospects par email ou dans un Excel automatiquement.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mapp" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-APP™ — Application Mobile PWA</h2>
+                <p class="modal-subtitle">🧠 SOLUTIONS TECHNIQUES & INTELLIGENCE ARTIFICIELLE</p>
+                <div class="modal-price">1 990€</div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>Nous développons une Progressive Web App (PWA). C'est un site web qui se comporte comme une application : les clients l'installent sur leur écran d'accueil sans passer par l'App Store (bien qu'une option Store soit possible).</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Engagement : Grâce aux notifications push, vous restez "dans la poche" de vos clients.</li>
+                    <li>Coût réduit : Un seul développement pour tous les téléphones (iOS & Android).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mspeed" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-SPEED™ — Audit & Optimisation</h2>
+                <p class="modal-subtitle">⚡ PERFORMANCE & MAINTENANCE</p>
+                <div class="modal-price">260€</div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>Analyse chirurgicale du code, compression des assets et mise en place de systèmes de cache avancés. Nous nettoyons également tout script inutile ou malware.</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>SEO : Google adore les sites rapides et vous fera monter dans les résultats.</li>
+                    <li>Conversion : Un site qui charge en moins d'une seconde retient 50% de visiteurs en plus qu'un site lent.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mcare" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-CARE MINI</h2>
+                <p class="modal-subtitle">⚡ PERFORMANCE & MAINTENANCE</p>
+                <div class="modal-price">39€<span style="font-size: 1rem; color: #94a3b8;">/mois</span></div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>Nous sommes votre département technique. On gère les serveurs, les sauvegardes et les petites modifs de design pour que votre site ne vieillisse jamais.</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Hébergement Haute Performance : Serveurs optimisés pour la vitesse.</li>
+                    <li>Sauvegardes Hebdomadaires : Protection contre les pertes de données.</li>
+                    <li>Mises à jour de sécurité : Protection contre les vulnérabilités.</li>
+                    <li>2 modifications de design /mois : Évolution graphique incluse.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mseo" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">M-SEO STARTER</h2>
+                <p class="modal-subtitle">⚡ PERFORMANCE & MAINTENANCE</p>
+                <div class="modal-price">89€<span style="font-size: 1rem; color: #94a3b8;">/mois</span></div>
+            </div>
+            <div class="modal-section">
+                <h4>🔧 Fonctionnement</h4>
+                <p>On ne se contente pas de lancer le site. On surveille vos positions sur Google chaque mois et on ajuste la stratégie pour que vous restiez devant la concurrence.</p>
+            </div>
+            <div class="modal-section">
+                <h4>✨ Bénéfices</h4>
+                <ul class="modal-benefits">
+                    <li>Suivi de 5 Mots-clés : Monitoring de vos positions stratégiques.</li>
+                    <li>Optimisation Fiche Google : Amélioration continue de votre visibilité locale.</li>
+                    <li>Rapport Mensuel Simple : Suivi transparent de vos progrès.</li>
+                    <li>Conseils d'amélioration : Stratégies personnalisées pour votre croissance.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <script src="js/main-new.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -413,6 +777,58 @@
             easing: 'ease-in-out',
             once: true,
             offset: 100
+        });
+
+        // Gestionnaire des modales
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fonction pour ouvrir une modale
+            function openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            // Fonction pour fermer une modale
+            function closeModal(modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Gestionnaire des boutons info
+            document.querySelectorAll('.btn-info').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    openModal(modalId);
+                });
+            });
+
+            // Gestionnaire des boutons de fermeture
+            document.querySelectorAll('.modal-close').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    closeModal(modal);
+                });
+            });
+
+            // Fermeture en cliquant sur l'arrière-plan
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal(this);
+                    }
+                });
+            });
+
+            // Fermeture avec la touche Échap
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal.active').forEach(modal => {
+                        closeModal(modal);
+                    });
+                }
+            });
         });
     </script>
 </body>
