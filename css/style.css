@@ -2018,7 +2018,6 @@ body > * {
     width: 95%;
     max-height: 95vh;
   }
-
   .service-modal-header {
     padding: 1.5rem 1.5rem 1rem;
     flex-direction: column;
@@ -3140,6 +3139,17 @@ body > * {
     padding: 0 0.75rem;
     max-width: 100%;
   }
+.hero-cta {
+  flex-direction: column;
+  width: 100%;
+  gap: var(--spacing-md);
+}
+
+.hero-cta .btn-primary,
+.hero-cta .btn-secondary {
+  width: 100%;
+  justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
