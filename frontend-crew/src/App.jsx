@@ -5,6 +5,95 @@ import ProjectInput from './components/ProjectInput';
 import AgentCard from './components/AgentCard';
 import { sendChatMessage } from './api/client';
 
+/**
+ * Retourne la configuration des agents en fonction du mode détecté
+ * @param {string|null} mode - Le mode détecté par l'API
+ * @returns {Object} Configuration avec primary et secondary cards
+ */
+const getAgentConfig = (mode) => {
+  switch (mode) {
+    case 'TECH_MODE':
+      return {
+        primary: {
+          agent: 'M2',
+          title: 'Marp2 - Tech Lead 🛠️',
+          subtitle: 'Analyse Technique & Code',
+          color: 'border-cyan-500/50',
+          gradientFrom: 'from-cyan-500',
+          gradientTo: 'to-blue-600',
+        },
+        secondary: {
+          agent: 'M3',
+          title: 'Marp3 - Security Check 🛡️',
+          subtitle: 'Vérification Sécurité',
+          color: 'border-rose-500/50',
+          gradientFrom: 'from-rose-500',
+          gradientTo: 'to-orange-500',
+        },
+      };
+    
+    case 'SALES_MODE':
+      return {
+        primary: {
+          agent: 'M6',
+          title: 'Marp6 - The Closer 💼',
+          subtitle: 'Stratégie de Vente & Prix',
+          color: 'border-emerald-500/50',
+          gradientFrom: 'from-emerald-500',
+          gradientTo: 'to-green-600',
+        },
+        secondary: {
+          agent: 'M4',
+          title: 'Marp4 - Business Check 💰',
+          subtitle: 'Validation Business',
+          color: 'border-amber-500/50',
+          gradientFrom: 'from-amber-500',
+          gradientTo: 'to-yellow-600',
+        },
+      };
+    
+    case 'GROWTH_MODE':
+      return {
+        primary: {
+          agent: 'M5',
+          title: 'Marp5 - Marketing Guru 🚀',
+          subtitle: 'Positionnement & Buzz',
+          color: 'border-purple-500/50',
+          gradientFrom: 'from-purple-500',
+          gradientTo: 'to-pink-600',
+        },
+        secondary: {
+          agent: 'M7',
+          title: 'Marp7 - Nurture Strategy 📧',
+          subtitle: 'Stratégie de Nurture',
+          color: 'border-teal-500/50',
+          gradientFrom: 'from-teal-500',
+          gradientTo: 'to-cyan-600',
+        },
+      };
+    
+    default: // PROJECT_MODE ou mode par défaut
+      return {
+        primary: {
+          agent: 'M1',
+          title: 'Marp1 - Product Architect 🏗️',
+          subtitle: 'Analyse de Produit',
+          color: 'border-indigo-500/50',
+          gradientFrom: 'from-indigo-500',
+          gradientTo: 'to-blue-600',
+        },
+        secondary: {
+          agent: 'M3',
+          title: 'Marp3 - Reality Check ⚖️',
+          subtitle: 'Critique de Marp3',
+          color: 'border-rose-500/50',
+          gradientFrom: 'from-rose-500',
+          gradientTo: 'to-orange-500',
+        },
+      };
+  }
+};
+
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [marp1Data, setMarp1Data] = useState(null);
@@ -58,6 +147,9 @@ function App() {
       setIsLoading(false);
     }
   };
+
+  // Calculer la configuration des agents en fonction du mode
+  const agentConfig = getAgentConfig(mode);
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -163,26 +255,26 @@ function App() {
             animate={{ opacity: 1 }}
             className="grid md:grid-cols-2 gap-6 max-w-7xl mx-auto"
           >
-            {/* Marp1 - Product Card (Bleue) */}
+            {/* Primary Card - Product Analysis */}
             <AgentCard
-              agent="M1"
-              title="Product Analysis"
-              subtitle="Analyse de Marp1"
-              color="border-indigo-500/50"
-              gradientFrom="from-indigo-500"
-              gradientTo="to-blue-600"
+              agent={agentConfig.primary.agent}
+              title={agentConfig.primary.title}
+              subtitle={agentConfig.primary.subtitle}
+              color={agentConfig.primary.color}
+              gradientFrom={agentConfig.primary.gradientFrom}
+              gradientTo={agentConfig.primary.gradientTo}
               isLoading={loadingStage === 'marp1'}
               content={marp1Data}
             />
 
-            {/* Marp3 - Reality Check Card (Rouge/Orange) */}
+            {/* Secondary Card - Reality Check */}
             <AgentCard
-              agent="M3"
-              title="Reality Check"
-              subtitle="Critique de Marp3"
-              color="border-rose-500/50"
-              gradientFrom="from-rose-500"
-              gradientTo="to-orange-500"
+              agent={agentConfig.secondary.agent}
+              title={agentConfig.secondary.title}
+              subtitle={agentConfig.secondary.subtitle}
+              color={agentConfig.secondary.color}
+              gradientFrom={agentConfig.secondary.gradientFrom}
+              gradientTo={agentConfig.secondary.gradientTo}
               isLoading={loadingStage === 'marp3'}
               content={marp3Data}
             />
