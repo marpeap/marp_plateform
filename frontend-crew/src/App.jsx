@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import ProjectInput from './components/ProjectInput';
 import AgentCard from './components/AgentCard';
+import WorkflowTimeline from './components/WorkflowTimeline';
 import { sendChatMessage } from './api/client';
 
 /**
@@ -102,6 +103,7 @@ function App() {
   const [error, setError] = useState(null);
   const [mode, setMode] = useState(null);
   const [finalVerdict, setFinalVerdict] = useState(null);
+  const [workflowLog, setWorkflowLog] = useState(null); // Nouveau state pour le workflow log
 
   const handleSubmit = async (projectDescription) => {
     setIsLoading(true);
@@ -110,6 +112,7 @@ function App() {
     setMarp3Data(null);
     setMode(null);
     setFinalVerdict(null);
+    setWorkflowLog(null); // Reset workflow log
     setLoadingStage('marp1');
 
     try {
@@ -129,21 +132,31 @@ function App() {
       if (response.final_verdict) {
         setFinalVerdict(response.final_verdict);
       }
-      
-      // Simuler le chargement séquentiel pour l'UX
-      // Marp1 arrive en premier (product_analysis)
-      if (response.product_analysis) {
-        setMarp1Data(response.product_analysis);
-        setLoadingStage('marp3');
-        
-        // Attendre un peu avant d'afficher Marp3
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-      
-      // Marp3 arrive ensuite (reality_check)
-      if (response.reality_check) {
-        setMarp3Data(response.reality_check);
+
+      // Vérifier si workflow_log existe (nouveau format)
+      if (response.workflow_log && Array.isArray(response.workflow_log) && response.workflow_log.length > 0) {
+        console.log('📊 Workflow log détecté:', response.workflow_log);
+        setWorkflowLog(response.workflow_log);
         setLoadingStage(null);
+      } else {
+        // Fallback: Ancien format avec product_analysis et reality_check
+        console.log('📊 Utilisation du format legacy (product_analysis/reality_check)');
+        
+        // Simuler le chargement séquentiel pour l'UX
+        // Marp1 arrive en premier (product_analysis)
+        if (response.product_analysis) {
+          setMarp1Data(response.product_analysis);
+          setLoadingStage('marp3');
+          
+          // Attendre un peu avant d'afficher Marp3
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        
+        // Marp3 arrive ensuite (reality_check)
+        if (response.reality_check) {
+          setMarp3Data(response.reality_check);
+          setLoadingStage(null);
+        }
       }
 
     } catch (err) {
@@ -261,40 +274,46 @@ function App() {
         </AnimatePresence>
 
         {/* Results Section */}
-        {(isLoading || marp1Data || marp3Data) && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="grid md:grid-cols-2 gap-6 max-w-7xl mx-auto"
-          >
-            {/* Primary Card - Product Analysis */}
-            <AgentCard
-              agent={agentConfig.primary.agent}
-              title={agentConfig.primary.title}
-              subtitle={agentConfig.primary.subtitle}
-              color={agentConfig.primary.color}
-              gradientFrom={agentConfig.primary.gradientFrom}
-              gradientTo={agentConfig.primary.gradientTo}
-              isLoading={loadingStage === 'marp1'}
-              content={marp1Data}
-            />
+        {/* Nouveau format: WorkflowTimeline si workflow_log existe */}
+        {workflowLog && workflowLog.length > 0 ? (
+          <WorkflowTimeline logs={workflowLog} />
+        ) : (
+          /* Ancien format: AgentCard (fallback) */
+          (isLoading || marp1Data || marp3Data) && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="grid md:grid-cols-2 gap-6 max-w-7xl mx-auto"
+            >
+              {/* Primary Card - Product Analysis */}
+              <AgentCard
+                agent={agentConfig.primary.agent}
+                title={agentConfig.primary.title}
+                subtitle={agentConfig.primary.subtitle}
+                color={agentConfig.primary.color}
+                gradientFrom={agentConfig.primary.gradientFrom}
+                gradientTo={agentConfig.primary.gradientTo}
+                isLoading={loadingStage === 'marp1'}
+                content={marp1Data}
+              />
 
-            {/* Secondary Card - Reality Check */}
-            <AgentCard
-              agent={agentConfig.secondary.agent}
-              title={agentConfig.secondary.title}
-              subtitle={agentConfig.secondary.subtitle}
-              color={agentConfig.secondary.color}
-              gradientFrom={agentConfig.secondary.gradientFrom}
-              gradientTo={agentConfig.secondary.gradientTo}
-              isLoading={loadingStage === 'marp3'}
-              content={marp3Data}
-            />
-          </motion.div>
+              {/* Secondary Card - Reality Check */}
+              <AgentCard
+                agent={agentConfig.secondary.agent}
+                title={agentConfig.secondary.title}
+                subtitle={agentConfig.secondary.subtitle}
+                color={agentConfig.secondary.color}
+                gradientFrom={agentConfig.secondary.gradientFrom}
+                gradientTo={agentConfig.secondary.gradientTo}
+                isLoading={loadingStage === 'marp3'}
+                content={marp3Data}
+              />
+            </motion.div>
+          )
         )}
 
         {/* Empty State */}
-        {!isLoading && !marp1Data && !marp3Data && !error && (
+        {!isLoading && !workflowLog && !marp1Data && !marp3Data && !error && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
