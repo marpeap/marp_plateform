@@ -14,6 +14,13 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     console.log(`[API] Requête vers: ${config.url}`);
+    
+    // Ajouter le header admin key si disponible
+    const adminKey = localStorage.getItem('admin_key');
+    if (adminKey) {
+      config.headers['x-admin-key'] = adminKey;
+    }
+    
     return config;
   },
   (error) => {
