@@ -134,7 +134,7 @@
         }
 
         .price-subtitle {
-            color: #f5e502;
+            color: #94a3b8;
             font-size: 0.9rem;
             margin-bottom: 1.5rem;
         }
@@ -142,7 +142,7 @@
         .price-amount {
             font-size: 3.5rem;
             font-weight: 800;
-            color: #d1ffc2;
+            color: #fff;
             margin-bottom: 2rem;
             font-family: 'Inter', sans-serif;
             text-shadow: 0 0 20px rgba(255,255,255,0.1);
@@ -150,7 +150,7 @@
 
         .price-amount span {
             font-size: 1rem;
-            color: #fff;
+            color: #94a3b8;
             font-weight: 400;
         }
 
@@ -404,13 +404,13 @@
                 
                 <div class="pricing-card blue" data-aos="fade-up" data-aos-delay="100">
                     <button class="btn-info" data-modal="modal-mone" aria-label="Plus d'informations sur M-ONE™">🔍</button>
-                    <h3 class="price-title">Site Web Professionnel</h3>
+                    <h3 class="price-title"></h3>
                     <p class="price-subtitle">Le Pack M-ONE™</p>
                     <div class="price-amount">290€</div>
                     <ul class="price-features">
                         <li>Site One-Page Ultra-Rapide</li>
                         <li>Design Studio Premium</li>
-                        <li>Hébergement inclus</li>
+                        <li>Hébergement inclus (1 an)</li>
                         <li>Optimisé Mobile & SEO</li>
                         <li>Livraison 72h</li>
                     </ul>
@@ -420,14 +420,14 @@
                 <div class="pricing-card orange" data-aos="fade-up" data-aos-delay="200">
                     <div class="popular-badge">POPULAIRE</div>
                     <button class="btn-info" data-modal="modal-mshop" aria-label="Plus d'informations sur M-SHOP LITE™">🔍</button>
-                    <h3 class="price-title">Site de E-Commerce pro</h3>
-                    <p class="price-subtitle">Le Pack M-SHOP LITE™</p>
-                    <div class="price-amount">490€</div>
+                    <h3 class="price-title">M-SHOP LITE™</h3>
+                    <p class="price-subtitle">E-Commerce Start</p>
+                    <div class="price-amount">590€</div>
                     <ul class="price-features">
-                        <li>Boutique prête à encaisser</li>
+                        <li>Boutique Shopify/WooCommerce</li>
                         <li>Paiement Stripe Configuré</li>
                         <li>Jusqu'à 20 Produits Intégrés</li>
-                        <li>Design digne d'une grande marque</li>
+                        <li>Pages Légales & RGPD</li>
                         <li>Tuto Vidéo de Gestion</li>
                     </ul>
                     <a href="index.html#contact" class="btn-pack btn-orange">Lancer ma boutique</a>
@@ -435,15 +435,15 @@
 
                 <div class="pricing-card green" data-aos="fade-up" data-aos-delay="300">
                     <button class="btn-info" data-modal="modal-mlocal" aria-label="Plus d'informations sur M-LOCAL™">🔍</button>
-                    <h3 class="price-title">Visibilité Google Maps</h3>
-                    <p class="price-subtitle">Le Pack M-LOCAL™</p>
+                    <h3 class="price-title">M-LOCAL™</h3>
+                    <p class="price-subtitle">Visibilité Google Maps</p>
                     <div class="price-amount">190€</div>
                     <ul class="price-features">
                         <li>Création Fiche Google Business</li>
                         <li>Optimisation Mots-clés Locaux</li>
                         <li>Intégration Photos HD</li>
                         <li>QR Code Avis Clients</li>
-                        <li>Réponses aux derniers avis</li>
+                        <li>Réponses aux 5 derniers avis</li>
                     </ul>
                     <a href="index.html#contact" class="btn-pack btn-green">Être visible</a>
                 </div>
@@ -460,10 +460,10 @@
                 <div class="pricing-card" style="border-top: 4px solid #facc15; background: linear-gradient(180deg, rgba(250, 204, 21, 0.05) 0%, rgba(30, 30, 50, 0.6) 100%);">
                     <div class="popular-badge" style="background: #facc15; color: black;">ULTIMATE</div>
                     <button class="btn-info" data-modal="modal-mcorp" aria-label="Plus d'informations sur M-CORP™">🔍</button>
-                    <h3 class="price-title" style="color: #facc15;">Force de Travail Autonome</h3>
-                    <p class="price-subtitle">M-CORP™</p>
+                    <h3 class="price-title" style="color: #facc15;">M-CORP™</h3>
+                    <p class="price-subtitle">Force de Travail Autonome (Multi-Agents)</p>
                     <div style="margin-bottom: 1.5rem;">
-                        <span style="text-decoration: line-through; color: #ff9985; font-size: 1.2rem; font-weight: 700;">1 990€</span>
+                        <span style="text-decoration: line-through; color: #64748b; font-size: 1.2rem; font-weight: 700;">1 990€</span>
                         <div class="price-amount" style="margin-bottom: 0;">820€</div>
                     </div>
                     <ul class="price-features">
@@ -479,10 +479,9 @@
                 <div class="pricing-card" style="border-top: 4px solid #8b5cf6; background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(30, 30, 50, 0.6) 100%);">
                     <div class="popular-badge" style="background: #8b5cf6; color: white;">INNOVATION</div>
                     <button class="btn-info" data-modal="modal-mneural" aria-label="Plus d'informations sur M-NEURAL™">🔍</button>
-                    <h3 class="price-title">ChatBot IA Community Manager</h3>
-                    <p class="price-subtitle">Le Pack M-NEURAL™</p>
+                    <h3 class="price-title">M-NEURAL™</h3>
                     <div style="margin-bottom: 1.5rem;">
-                        <span style="text-decoration: line-through; color: #ff9985; font-size: 1.2rem; font-weight: 700;">290€</span>
+                        <span style="text-decoration: line-through; color: #64748b; font-size: 1.2rem; font-weight: 700;">290€</span>
                         <div class="price-amount" style="margin-bottom: 0;">180€</div>
                     </div>
                     <ul class="price-features">
@@ -497,12 +496,12 @@
 
                 <div class="pricing-card" style="border-top: 4px solid #ef4444;">
                     <button class="btn-info" data-modal="modal-mspeed" aria-label="Plus d'informations sur M-SPEED™">🔍</button>
-                    <h3 class="price-title">Optimisation & Vitesse</h3>
-                    <p class="price-subtitle">Le Pack M-SPEED™</p>
+                    <h3 class="price-title">M-SPEED™</h3>
+                    <p class="price-subtitle">Audit & Optimisation Vitesse</p>
                     <div class="price-amount">235€</div>
                     <ul class="price-features">
                         <li>Audit Complet Performance & Sécurité</li>
-                        <li>Optimisation Images & Code pour la vitesse</li>
+                        <li>Optimisation Images & Code (Cache)</li>
                         <li>Score Google PageSpeed 90+ Garanti</li>
                         <li>Nettoyage Malware / Virus</li>
                         <li>Rapport Avant / Après</li>
@@ -513,11 +512,11 @@
                 <div class="pricing-card" style="border-top: 4px solid #06b6d4; background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, rgba(30, 30, 50, 0.6) 100%);">
                     <div class="popular-badge" style="background: #06b6d4; color: white; right: -35px; top: 20px;">MOBILE</div>
                     <button class="btn-info" data-modal="modal-mapp" aria-label="Plus d'informations sur M-APP™">🔍</button>
-                    <h3 class="price-title">Application Smartphone</h3>
-                    <p class="price-subtitle">Le Pack M-APP™</p>
+                    <h3 class="price-title">M-APP™</h3>
+                    <p class="price-subtitle">Application Mobile Hybride / PWA</p>
                     <div class="price-amount">1 990€</div>
                     <ul class="price-features">
-                        <li>Compatible iOS & Android</li>
+                        <li>Compatible iOS & Android (1 seul code)</li>
                         <li>Installation sur écran d'accueil</li>
                         <li>Expérience Native & Fluide (React)</li>
                         <li>Mode Hors-Ligne & Notifications</li>
@@ -536,9 +535,9 @@
                 <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 900px; margin: 0 auto; gap: 2rem;">
                     <div class="pricing-card" style="border-top: 4px solid #8b5cf6;">
                         <button class="btn-info" data-modal="modal-mcare" aria-label="Plus d'informations sur M-CARE MINI">🔍</button>
-                        <h3 class="price-title">Maintenance & Hébergement</h3>
+                        <h3 class="price-title">M-CARE MINI</h3>
                         <div class="price-amount" style="font-size: 2.5rem; margin-bottom: 1rem;">49€<span>/mois</span></div>
-                        <p class="price-subtitle">M-CARE MINI</p>
+                        <p class="price-subtitle">Maintenance & Hébergement</p>
                         <ul class="price-features">
                             <li>Hébergement Haute Performance</li>
                             <li>Sauvegardes Hebdomadaires</li>
@@ -549,14 +548,14 @@
 
                     <div class="pricing-card" style="border-top: 4px solid #ec4899;">
                         <button class="btn-info" data-modal="modal-mseo" aria-label="Plus d'informations sur M-SEO STARTER">🔍</button>
-                        <h3 class="price-title">Croissance & Positionnement</h3>
+                        <h3 class="price-title">M-SEO STARTER</h3>
                         <div class="price-amount" style="font-size: 2.5rem; margin-bottom: 1rem;">89€<span>/mois</span></div>
-                        <p class="price-subtitle">M-SEO STARTER</p>
+                        <p class="price-subtitle">Croissance & Positionnement</p>
                         <ul class="price-features">
-                            <li>Votre Site en haut de la liste</li>
+                            <li>Suivi de 5 Mots-clés</li>
                             <li>Optimisation Fiche Google</li>
                             <li>Rapport Mensuel Simple</li>
-                            <li>Conseils d'amélioration & actions</li>
+                            <li>Conseils d'amélioration</li>
                         </ul>
                     </div>
                 </div>
@@ -606,7 +605,7 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2026 Marpeap Digitals. Tous droits réservés.</p>
-                <p>⚡ Développé par Marpeap Digitals ⚡</p>
+                <p>Développé avec ⚡ par Marpeap Digitals</p>
             </div>
         </div>
     </footer>
